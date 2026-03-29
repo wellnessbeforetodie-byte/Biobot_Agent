@@ -123,6 +123,7 @@
   .tf-stat.loss { color:#ff4466; font-weight:600; }
 
   .tf-section .chart-container { border-radius:0 0 12px 12px; border-top:none; }
+  .tf-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:0.8rem; padding:1rem 1.5rem; background:var(--bg-secondary); border-left:1px solid var(--border); border-right:1px solid var(--border); }
 
   .trade-table-wrapper {
     background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
@@ -185,36 +186,22 @@
     <br><br>🐦 All trades are posted live on X — <a href="https://x.com/Agent_biobot" target="_blank" style="color:#a855f7;text-decoration:none;font-weight:600">@Agent_Biobot</a>
   </div>
 
-  <div class="stats-grid">
-    <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">102</div></div>
-    <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">34.3%</div></div>
-    <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-141.86$</div></div>
-    <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-185.7</div></div>
-    <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+559.96$</div></div>
-    <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-580.60$</div></div>
-    <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">35</div></div>
-    <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">34</div></div>
-  </div>
-
-  <div class="section-title">📈 Overall Equity Curve</div>
-  <div class="global-chart">
-    <div class="chart-container" style="height:280px">
-      <canvas id="chart_global"></canvas>
-    </div>
-  </div>
-
   <div class="section-title">⏰ Performance by Timeframe</div>
   
     <div class="tf-section">
       <div class="tf-header" style="border-left: 4px solid #a855f7">
         <div class="tf-title" style="color: #a855f7">H2 Primary</div>
         <div class="tf-desc">Core strategy — 13 major pairs, score 8/10 min, conservative entries</div>
-        <div class="tf-stats-row">
-          <span class="tf-stat">3 trades</span>
-          <span class="tf-stat profit">66.7% win</span>
-          <span class="tf-stat profit">+508.58$ CAD</span>
-          <span class="tf-stat">+3.0 pips</span>
-        </div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">3</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">66.7%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+508.58$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+3.0</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+457.64$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-406.71$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">2</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">1</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_H2_Primary"></canvas>
@@ -225,12 +212,16 @@
       <div class="tf-header" style="border-left: 4px solid #f97316">
         <div class="tf-title" style="color: #f97316">H2 ALL-IN</div>
         <div class="tf-desc">Aggressive scanner — 28 pairs including exotics, 24H, high volume</div>
-        <div class="tf-stats-row">
-          <span class="tf-stat">36 trades</span>
-          <span class="tf-stat loss">27.8% win</span>
-          <span class="tf-stat loss">-1401.17$ CAD</span>
-          <span class="tf-stat">-102.4 pips</span>
-        </div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">36</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">27.8%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-1401.17$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-102.4</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+168.83$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-343.27$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">10</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">9</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_H2_ALLIN"></canvas>
@@ -241,12 +232,16 @@
       <div class="tf-header" style="border-left: 4px solid #3b82f6">
         <div class="tf-title" style="color: #3b82f6">H2 7pts</div>
         <div class="tf-desc">Relaxed threshold — 13 pairs, score 7/10 min, more opportunities</div>
-        <div class="tf-stats-row">
-          <span class="tf-stat">22 trades</span>
-          <span class="tf-stat loss">36.4% win</span>
-          <span class="tf-stat loss">-3126.56$ CAD</span>
-          <span class="tf-stat">-166.3 pips</span>
-        </div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">22</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">36.4%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-3126.56$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-166.3</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+116.32$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-507.14$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">8</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">8</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_H2_7pts"></canvas>
@@ -257,12 +252,16 @@
       <div class="tf-header" style="border-left: 4px solid #eab308">
         <div class="tf-title" style="color: #eab308">H1</div>
         <div class="tf-desc">Hourly momentum — 13 pairs, trend-following on 1H candles</div>
-        <div class="tf-stats-row">
-          <span class="tf-stat">9 trades</span>
-          <span class="tf-stat loss">33.3% win</span>
-          <span class="tf-stat loss">-362.91$ CAD</span>
-          <span class="tf-stat">-61.9 pips</span>
-        </div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">9</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">33.3%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-362.91$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-61.9</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+255.11$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-376.08$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">3</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">3</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_H1"></canvas>
@@ -273,12 +272,16 @@
       <div class="tf-header" style="border-left: 4px solid #00ff88">
         <div class="tf-title" style="color: #00ff88">M30</div>
         <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight™ validation</div>
-        <div class="tf-stats-row">
-          <span class="tf-stat">16 trades</span>
-          <span class="tf-stat loss">31.3% win</span>
-          <span class="tf-stat loss">-65.33$ CAD</span>
-          <span class="tf-stat">+73.4 pips</span>
-        </div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">16</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">31.3%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-65.33$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+73.4</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+1257.10$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-907.26$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">5</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">7</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_M30"></canvas>
@@ -289,12 +292,16 @@
       <div class="tf-header" style="border-left: 4px solid #ec4899">
         <div class="tf-title" style="color: #ec4899">M15</div>
         <div class="tf-desc">15-min scalping — 13 pairs, quick entries, no BioSight™ filter</div>
-        <div class="tf-stats-row">
-          <span class="tf-stat">16 trades</span>
-          <span class="tf-stat loss">43.8% win</span>
-          <span class="tf-stat profit">+4305.53$ CAD</span>
-          <span class="tf-stat">+68.5 pips</span>
-        </div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">16</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">43.8%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+4305.53$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+68.5</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+1287.64$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-784.66$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">7</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">6</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_M15"></canvas>
@@ -1333,49 +1340,13 @@
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI</p>
-  <p style="margin-top:.5rem">Last updated: 2026-03-29, 2:53:26 p.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-03-29, 3:06:44 p.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
 <script>
   Chart.defaults.color = '#555570';
   Chart.defaults.font.family = "'JetBrains Mono', monospace";
-
-  // Global equity curve
-  new Chart(document.getElementById('chart_global'), {
-    type: 'line',
-    data: {
-      labels: ["2026-03-18","2026-03-18","2026-03-18","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-19","2026-03-25","2026-03-25","2026-03-25","2026-03-25","2026-03-25","2026-03-25","2026-03-25","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-26","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27","2026-03-27"],
-      datasets: [{
-        label: 'Total Equity ($)',
-        data: [-1011.67,-1411.74,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-2011.84,-1105.56,-244.88,-424.17,-543.36,-650.78,-811.92,79.95,429.31,1321.19,688.12,1610.23,1449.84,1209.27,1052.63,1290.11,2201.58,2886.85,3285.08,3970.35,4880.83,4880.83,4503.96,4508.81,3828.97,3833.32,3837.67,2770.22,1702.76,586.55,609.96,-597.53,-1805.01,-2890.98,-4098.46,-5184.43,-6391.91,-7599.4,-5795.88,-3859.09,-1922.31,-118.79,-37.21,212.37,226.87,196.32,236.35,276.37,-127.56,-505.69,-851.86,-1235.16,-549.89,-493.41,-870.27,-813.8,-1071.34,-1014.87,-1421.57,-1415.4,-1657.63,-1605.85,-1554.07,-1939.97,-1888.19,-2130.42,-2078.64,-141.86],
-        borderColor: '#a855f7',
-        backgroundColor: 'rgba(168,85,247,0.1)',
-        borderWidth: 2.5,
-        fill: true,
-        tension: 0.3,
-        pointRadius: 2,
-        pointHoverRadius: 5,
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#1a1a28',
-          borderColor: '#a855f7',
-          borderWidth: 1,
-          callbacks: { label: ctx => (ctx.parsed.y>=0?'+':'') + ctx.parsed.y.toFixed(2) + '$ CAD' }
-        }
-      },
-      scales: {
-        x: { ticks:{maxTicksLimit:10,font:{size:10}}, grid:{color:'rgba(42,42,64,0.5)'} },
-        y: { ticks:{callback:v=>(v>=0?'+':'')+v+'$',font:{size:10}}, grid:{color:'rgba(42,42,64,0.5)'} }
-      }
-    }
-  });
 
   // Per-TF charts
   
