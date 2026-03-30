@@ -96,12 +96,12 @@
   .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:2rem; }
 
   .stat-card {
-    background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:1.5rem;
-    transition:all .2s; min-width:0;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:1rem 0.8rem;
+    transition:all .2s; min-width:0; overflow:hidden;
   }
   .stat-card:hover { background:var(--bg-card-hover); border-color:#7c3aed; box-shadow:var(--glow-purple); }
-  .stat-label { font-size:.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-family:'JetBrains Mono',monospace; }
-  .stat-value { font-size:2rem; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:.4rem; word-break:break-all; }
+  .stat-label { font-size:.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-family:'JetBrains Mono',monospace; }
+  .stat-value { font-size:1.3rem; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:.3rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .stat-value.profit { color: #00ff88; }
   .stat-value.loss { color: #ff4466; }
   .stat-value.neutral { color: #a855f7; }
@@ -127,7 +127,7 @@
   .tf-stat.loss { color:#ff4466; font-weight:600; }
 
   .tf-section .chart-container { border-radius:0 0 12px 12px; border-top:none; }
-  .tf-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; padding:1.2rem 1.5rem; background:var(--bg-secondary); border-left:1px solid var(--border); border-right:1px solid var(--border); }
+  .tf-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; padding:1rem; background:var(--bg-secondary); border-left:1px solid var(--border); border-right:1px solid var(--border); }
 
   .trade-table-wrapper {
     background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
@@ -163,11 +163,11 @@
 
   @media (max-width:768px) {
     .stats-grid { grid-template-columns:repeat(2,1fr); }
-    .tf-stats-grid { grid-template-columns:repeat(2,1fr); }
+    .tf-stats-grid { grid-template-columns:repeat(2,1fr); gap:0.5rem; padding:0.8rem; }
     h1 { font-size:1.6rem; }
-    .stat-value { font-size:1.6rem; }
-    .stat-label { font-size:.75rem; }
-    .stat-card { padding:1.2rem; }
+    .stat-value { font-size:1.1rem; }
+    .stat-label { font-size:.6rem; }
+    .stat-card { padding:0.8rem 0.6rem; }
     .tf-stats-row { gap:.8rem; }
   }
 </style>
@@ -508,7 +508,7 @@
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-03-30, 10:04:53 a.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-03-30, 10:08:44 a.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
