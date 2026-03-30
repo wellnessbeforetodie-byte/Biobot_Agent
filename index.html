@@ -208,11 +208,71 @@
       </div>
     </div>
 
+    <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #3b82f6">
+        <div class="tf-title" style="color: #3b82f6">H2 7pts</div>
+        <div class="tf-desc">Relaxed threshold — 13 pairs, score 7/10 min, more opportunities</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">1</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+36.15$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+14.7</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+36.15$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">1</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_H2_7pts"></canvas>
+      </div>
+    </div>
+
+    <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #00ff88">
+        <div class="tf-title" style="color: #00ff88">M30</div>
+        <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight™ validation</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">1</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+871.63$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+21.5</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+871.63$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">1</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_M30"></canvas>
+      </div>
+    </div>
+
   <div class="section-title">📋 All Trades</div>
   <div class="trade-table-wrapper">
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
-      <tbody><tr class="loss">
+      <tbody><tr class="profit">
+      <td>2026-03-30<br><span class="time">12:30 a.m.</span></td>
+      <td><strong>AUD/USD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+871.63$</td>
+      <td>+21.5</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-03-30<br><span class="time">12:30 a.m.</span></td>
+      <td><strong>USD/JPY</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#3b82f6;color:#3b82f6">H2 7pts</span></td>
+      <td class="profit">+36.15$</td>
+      <td>+14.7</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="loss">
       <td>2026-03-29<br><span class="time">10:30 p.m.</span></td>
       <td><strong>GBP/JPY</strong></td>
       <td>📈 BUY</td>
@@ -230,7 +290,7 @@
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-03-30, 12:00:16 a.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-03-30, 12:30:15 a.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
@@ -266,6 +326,108 @@
           tooltip: {
             backgroundColor: '#1a1a28',
             borderColor: '#f97316',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('chart_H2_7pts'), {
+      type: 'line',
+      data: {
+        labels: ["2026-03-30"],
+        datasets: [{
+          label: 'H2 7pts Equity ($)',
+          data: [36.15],
+          borderColor: '#3b82f6',
+          backgroundColor: '#3b82f622',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#3b82f6',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('chart_M30'), {
+      type: 'line',
+      data: {
+        labels: ["2026-03-30"],
+        datasets: [{
+          label: 'M30 Equity ($)',
+          data: [871.63],
+          borderColor: '#00ff88',
+          backgroundColor: '#00ff8822',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#00ff88',
             borderWidth: 1,
             titleColor: '#e8e8f0',
             bodyColor: '#e8e8f0',
