@@ -229,6 +229,26 @@
     </div>
 
     <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #eab308">
+        <div class="tf-title" style="color: #eab308">H1</div>
+        <div class="tf-desc">Hourly momentum — 13 pairs, trend-following on 1H candles</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">1</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">0.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-662.12$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-44.5</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+0$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-662.12$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">0</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">1</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_H1"></canvas>
+      </div>
+    </div>
+
+    <div class="tf-section">
       <div class="tf-header" style="border-left: 4px solid #00ff88">
         <div class="tf-title" style="color: #00ff88">M30</div>
         <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight™ validation</div>
@@ -252,7 +272,17 @@
   <div class="trade-table-wrapper">
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
-      <tbody><tr class="profit">
+      <tbody><tr class="loss">
+      <td>2026-03-30<br><span class="time">07:00 a.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="loss">-662.12$</td>
+      <td>-44.5</td>
+      <td>-1.01R</td>
+      <td>❌</td>
+    </tr>
+<tr class="profit">
       <td>2026-03-30<br><span class="time">12:30 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
       <td>📉 SELL</td>
@@ -290,7 +320,7 @@
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-03-30, 6:30:15 a.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-03-30, 7:00:33 a.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
@@ -377,6 +407,57 @@
           tooltip: {
             backgroundColor: '#1a1a28',
             borderColor: '#3b82f6',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('chart_H1'), {
+      type: 'line',
+      data: {
+        labels: ["2026-03-30"],
+        datasets: [{
+          label: 'H1 Equity ($)',
+          data: [-662.12],
+          borderColor: '#eab308',
+          backgroundColor: '#eab30822',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(255,68,102,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#eab308',
             borderWidth: 1,
             titleColor: '#e8e8f0',
             bodyColor: '#e8e8f0',
