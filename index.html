@@ -298,14 +298,14 @@
         <div class="tf-desc">15-min scalping — 13 pairs, quick entries, no BioSight™ filter</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">1</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+1100.88$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+21.6</div></div>
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">2</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">50.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+42.92$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-49.5</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+1100.88$</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-1057.97$</div></div>
         <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">1</div></div>
-        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">1</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_M15"></canvas>
@@ -317,6 +317,16 @@
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
       <tbody><tr class="loss">
+      <td>2026-03-30<br><span class="time">10:00 a.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-1057.97$</td>
+      <td>-71.1</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
       <td>2026-03-30<br><span class="time">08:48 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
       <td>📉 SELL</td>
@@ -494,7 +504,7 @@
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-03-30, 9:49:26 a.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-03-30, 10:00:29 a.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
@@ -762,18 +772,18 @@
     new Chart(document.getElementById('chart_M15'), {
       type: 'line',
       data: {
-        labels: ["2026-03-30"],
+        labels: ["2026-03-30","2026-03-30"],
         datasets: [{
           label: 'M15 Equity ($)',
-          data: [1100.88],
+          data: [1100.88,42.92],
           borderColor: '#ec4899',
           backgroundColor: '#ec489922',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(0,255,136,0.8)"],
-          pointBorderColor: ["rgba(0,255,136,0.8)"],
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)"],
           pointHoverRadius: 6,
         }]
       },
