@@ -222,19 +222,39 @@ setTimeout(() => {
     </div>
 
     <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #00ff88">
+        <div class="tf-title" style="color: #00ff88">M30</div>
+        <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight™ validation</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">2</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">0.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-1265.69$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-100.0</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+0$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-632.85$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">0</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">2</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_M30"></canvas>
+      </div>
+    </div>
+
+    <div class="tf-section">
       <div class="tf-header" style="border-left: 4px solid #ec4899">
         <div class="tf-title" style="color: #ec4899">M15</div>
         <div class="tf-desc">15-min scalping — 13 pairs, quick entries, no BioSight™ filter</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">3</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+4053.62$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+81.0</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+1351.21$</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
-        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">3</div></div>
-        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">6</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">66.7%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+4245.71$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+49.4</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+1339.78$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-556.70$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">4</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">2</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_M15"></canvas>
@@ -245,7 +265,57 @@ setTimeout(() => {
   <div class="trade-table-wrapper">
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
-      <tbody><tr class="profit">
+      <tbody><tr class="loss">
+      <td>2026-04-01<br><span class="time">10:00 a.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="loss">-759.42$</td>
+      <td>-50.0</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-01<br><span class="time">10:00 a.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="loss">-506.28$</td>
+      <td>-50.0</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-01<br><span class="time">09:58 a.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-668.04$</td>
+      <td>-28.2</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-01<br><span class="time">09:58 a.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-445.36$</td>
+      <td>-28.2</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-01<br><span class="time">09:56 a.m.</span></td>
+      <td><strong>USD/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+1305.49$</td>
+      <td>+24.8</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">08:56 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
       <td>📈 BUY</td>
@@ -313,7 +383,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-01, 9:45:03 a.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-01, 10:00:08 a.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
@@ -374,21 +444,72 @@ setTimeout(() => {
       }
     });
 
+    new Chart(document.getElementById('chart_M30'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-01","2026-04-01"],
+        datasets: [{
+          label: 'M30 Equity ($)',
+          data: [-506.28,-1265.69],
+          borderColor: '#00ff88',
+          backgroundColor: '#00ff8822',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#00ff88',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
     new Chart(document.getElementById('chart_M15'), {
       type: 'line',
       data: {
-        labels: ["2026-04-01","2026-04-01","2026-04-01"],
+        labels: ["2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01"],
         datasets: [{
           label: 'M15 Equity ($)',
-          data: [2544.35,3744.27,4053.62],
+          data: [2544.35,3744.27,4053.62,5359.11,4913.75,4245.71],
           borderColor: '#ec4899',
           backgroundColor: '#ec489922',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
-          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
           pointHoverRadius: 6,
         }]
       },
