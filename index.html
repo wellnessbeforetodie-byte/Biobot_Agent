@@ -188,7 +188,10 @@ setTimeout(() => {
         <div class="subtitle">AI Trading Journal</div>
       </div>
     </div>
-    <div class="live-badge"><span class="live-dot"></span>LIVE — OANDA Broker</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="live-badge"><span class="live-dot"></span>LIVE — OANDA Broker</div>
+      <button onclick="window.location.href=window.location.pathname+'?t='+Date.now()" style="background:rgba(0,255,136,0.15);color:#00ff88;border:2px solid #00ff88;padding:6px 16px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:600;cursor:pointer;border-radius:6px;letter-spacing:1px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.3)'" onmouseout="this.style.background='rgba(0,255,136,0.15)'">🔄 REFRESH</button>
+    </div>
   </div>
 </div>
 
@@ -533,7 +536,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-01, 9:53:46 p.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-01, 10:03:47 p.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
