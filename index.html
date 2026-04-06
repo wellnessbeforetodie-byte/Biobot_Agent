@@ -355,7 +355,7 @@
     </button>
 
     <button class="system-toggle" type="button" data-system="gpt" data-panel="gpt" aria-pressed="false" style="--system-color:#06b6d4">
-      🩵 GPT
+      <span style="display:inline-block;width:1em;height:1em;border-radius:50%;background:#06b6d4;vertical-align:middle"></span> GPT
     </button>
 
     <button class="system-toggle" type="button" data-system="meta" data-panel="meta" aria-pressed="false" style="--system-color:#f59e0b">
@@ -1381,7 +1381,9 @@
   </div>
 
   <div class="system-panel" data-panel="gpt" hidden>
-    <div class="section-title">🩵 GPT Trades</div>
+    <div class="section-title">📈 Equity Curve</div>
+    <div class="placeholder-panel">Aucune courbe disponible sans P&amp;L réalisé</div>
+    <div class="section-title"><span style="display:inline-block;width:1em;height:1em;border-radius:50%;background:#06b6d4;vertical-align:middle"></span> GPT Trades</div>
     <div class="trade-table-wrapper">
     <table>
       <thead>
@@ -1445,6 +1447,8 @@
   </div>
   </div>
 <div class="system-panel" data-panel="meta" hidden>
+    <div class="section-title">📈 Equity Curve</div>
+    <div class="placeholder-panel">Aucune courbe disponible sans P&amp;L réalisé</div>
     <div class="section-title">🟠 META Trades</div>
     <div class="trade-table-wrapper">
     <table>
@@ -1520,6 +1524,8 @@
   </div>
   </div>
 <div class="system-panel" data-panel="claude" hidden>
+    <div class="section-title">📈 Equity Curve</div>
+    <div class="placeholder-panel">Aucune courbe disponible sans P&amp;L réalisé</div>
     <div class="section-title">🔵 CLAUDE Trades</div>
     <div class="trade-table-wrapper">
     <table>
@@ -1672,6 +1678,10 @@
   </div>
   </div>
 <div class="system-panel" data-panel="gemini" hidden>
+    <div class="section-title" style="margin-bottom:0">📈 Equity Curve</div>
+    <div class="chart-container system-chart-container">
+      <canvas id="system_chart_gemini" data-system-chart="gemini"></canvas>
+    </div>
     <div class="section-title">🔴 GEMINI Trades</div>
     <div class="trade-table-wrapper">
     <table>
@@ -1780,6 +1790,8 @@
   </div>
   </div>
 <div class="system-panel" data-panel="grok" hidden>
+    <div class="section-title">📈 Equity Curve</div>
+    <div class="placeholder-panel">Aucune courbe disponible sans P&amp;L réalisé</div>
     <div class="section-title">🟢 GROK Trades</div>
     <div class="trade-table-wrapper">
     <table>
@@ -1822,6 +1834,8 @@
   </div>
   </div>
 <div class="system-panel" data-panel="skynet" hidden>
+    <div class="section-title">📈 Equity Curve</div>
+    <div class="placeholder-panel">Aucune courbe disponible sans P&amp;L réalisé</div>
     <div class="section-title">⚪ SKYNET Trades</div>
     <div class="placeholder-panel"><div>Aucun trade enregistré</div></div>
   </div>
@@ -1830,295 +1844,124 @@
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight | PulseGuard</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-06, 6:20:10 a.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-06, 6:46:06 a.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
 <script>
   Chart.defaults.color = '#555570';
   Chart.defaults.font.family = "'JetBrains Mono', monospace";
+  const CHART_INSTANCES = new Map();
+  const BI0BOT_TIMEFRAME_CHARTS = {"chart_H2_Primary":{"label":"H2 Primary Equity ($)","points":[{"x":"2026-04-02","y":0},{"x":"2026-04-02","y":883.22},{"x":"2026-04-02","y":380.54},{"x":"2026-04-02","y":-373.49},{"x":"2026-04-03","y":-848.17},{"x":"2026-04-03","y":-1560.2},{"x":"2026-04-03","y":-1128.44},{"x":"2026-04-06","y":-1338.38},{"x":"2026-04-06","y":-1653.29},{"x":"2026-04-06","y":-2067.13},{"x":"2026-04-06","y":-2687.88},{"x":"2026-04-06","y":-2666.54},{"x":"2026-04-06","y":-3073.41},{"x":"2026-04-06","y":-3683.73}]},"chart_H2_ALLIN":{"label":"H2 ALL-IN Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":35.15},{"x":"2026-04-01","y":87.87}]},"chart_H1":{"label":"H1 Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":-425.75},{"x":"2026-04-01","y":-1064.37},{"x":"2026-04-01","y":-233.36},{"x":"2026-04-01","y":-201.54},{"x":"2026-04-01","y":-624.46},{"x":"2026-04-01","y":-1258.85},{"x":"2026-04-02","y":-1674.6},{"x":"2026-04-02","y":-2298.23},{"x":"2026-04-02","y":-2709.92},{"x":"2026-04-02","y":-3327.45},{"x":"2026-04-02","y":-3282.57},{"x":"2026-04-02","y":-3215.25},{"x":"2026-04-06","y":-3627.96},{"x":"2026-04-06","y":-4247.03}]},"chart_M30":{"label":"M30 Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":-506.28},{"x":"2026-04-01","y":-1265.69},{"x":"2026-04-01","y":-1706.55},{"x":"2026-04-01","y":-2367.83},{"x":"2026-04-01","y":-2334.27},{"x":"2026-04-01","y":-2291.88},{"x":"2026-04-02","y":-2712.96},{"x":"2026-04-02","y":-3344.6},{"x":"2026-04-02","y":-3794.59},{"x":"2026-04-02","y":-4469.58},{"x":"2026-04-02","y":-4914.14},{"x":"2026-04-02","y":-5580.97},{"x":"2026-04-03","y":-6027.45},{"x":"2026-04-03","y":-6697.16},{"x":"2026-04-06","y":-7095.87},{"x":"2026-04-06","y":-7693.92},{"x":"2026-04-06","y":-8091.06},{"x":"2026-04-06","y":-8686.76}]},"chart_M15":{"label":"M15 Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":2544.35},{"x":"2026-04-01","y":3744.27},{"x":"2026-04-01","y":4053.62},{"x":"2026-04-01","y":5359.11},{"x":"2026-04-01","y":4913.75},{"x":"2026-04-01","y":4245.71},{"x":"2026-04-02","y":3827.42},{"x":"2026-04-02","y":3199.98},{"x":"2026-04-02","y":2667.76},{"x":"2026-04-02","y":1869.43},{"x":"2026-04-02","y":1454.8},{"x":"2026-04-02","y":832.85},{"x":"2026-04-02","y":426.1},{"x":"2026-04-02","y":-184.03},{"x":"2026-04-02","y":-614.18},{"x":"2026-04-02","y":-1259.4},{"x":"2026-04-02","y":-1679.61},{"x":"2026-04-02","y":-2309.92},{"x":"2026-04-02","y":-2721.13},{"x":"2026-04-02","y":-3337.93},{"x":"2026-04-02","y":-3756.66},{"x":"2026-04-02","y":-4381.67},{"x":"2026-04-02","y":-4792.47},{"x":"2026-04-02","y":-5408.67},{"x":"2026-04-03","y":-5889.21},{"x":"2026-04-03","y":-6610.02},{"x":"2026-04-03","y":-7145.67},{"x":"2026-04-03","y":-7949.16},{"x":"2026-04-06","y":-7638.2},{"x":"2026-04-06","y":-7174.14},{"x":"2026-04-06","y":-7572.19},{"x":"2026-04-06","y":-8169.25}]}};
+  const SYSTEM_EQUITY_CURVES = {"biobot":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":-425.75},{"x":"2026-04-01","y":-1064.37},{"x":"2026-04-01","y":1479.98},{"x":"2026-04-01","y":2679.89},{"x":"2026-04-01","y":3510.91},{"x":"2026-04-01","y":3820.26},{"x":"2026-04-01","y":5125.75},{"x":"2026-04-01","y":4680.39},{"x":"2026-04-01","y":4012.35},{"x":"2026-04-01","y":3506.07},{"x":"2026-04-01","y":2746.66},{"x":"2026-04-01","y":2305.8},{"x":"2026-04-01","y":1644.52},{"x":"2026-04-01","y":1679.67},{"x":"2026-04-01","y":1732.39},{"x":"2026-04-01","y":1765.95},{"x":"2026-04-01","y":1808.34},{"x":"2026-04-01","y":1840.16},{"x":"2026-04-01","y":1417.24},{"x":"2026-04-01","y":782.86},{"x":"2026-04-02","y":364.56},{"x":"2026-04-02","y":-262.87},{"x":"2026-04-02","y":-795.1},{"x":"2026-04-02","y":-1593.43},{"x":"2026-04-02","y":-2008.05},{"x":"2026-04-02","y":-2630},{"x":"2026-04-02","y":-1746.78},{"x":"2026-04-02","y":-2153.53},{"x":"2026-04-02","y":-2763.66},{"x":"2026-04-02","y":-3193.81},{"x":"2026-04-02","y":-3839.03},{"x":"2026-04-02","y":-4260.12},{"x":"2026-04-02","y":-4891.76},{"x":"2026-04-02","y":-5307.51},{"x":"2026-04-02","y":-5931.14},{"x":"2026-04-02","y":-6351.35},{"x":"2026-04-02","y":-6981.66},{"x":"2026-04-02","y":-7392.87},{"x":"2026-04-02","y":-8009.67},{"x":"2026-04-02","y":-8421.36},{"x":"2026-04-02","y":-9038.89},{"x":"2026-04-02","y":-9457.61},{"x":"2026-04-02","y":-10082.63},{"x":"2026-04-02","y":-10532.62},{"x":"2026-04-02","y":-11207.61},{"x":"2026-04-02","y":-11162.73},{"x":"2026-04-02","y":-11095.41},{"x":"2026-04-02","y":-11539.97},{"x":"2026-04-02","y":-12206.8},{"x":"2026-04-02","y":-12709.49},{"x":"2026-04-02","y":-13463.51},{"x":"2026-04-02","y":-13874.31},{"x":"2026-04-02","y":-14490.51},{"x":"2026-04-03","y":-14971.05},{"x":"2026-04-03","y":-15691.86},{"x":"2026-04-03","y":-16166.54},{"x":"2026-04-03","y":-16878.57},{"x":"2026-04-03","y":-16446.81},{"x":"2026-04-03","y":-16982.47},{"x":"2026-04-03","y":-17785.95},{"x":"2026-04-03","y":-18232.43},{"x":"2026-04-03","y":-18902.14},{"x":"2026-04-06","y":-19112.08},{"x":"2026-04-06","y":-19427},{"x":"2026-04-06","y":-19116.04},{"x":"2026-04-06","y":-18651.98},{"x":"2026-04-06","y":-19065.82},{"x":"2026-04-06","y":-19686.57},{"x":"2026-04-06","y":-19665.22},{"x":"2026-04-06","y":-20072.1},{"x":"2026-04-06","y":-20682.42},{"x":"2026-04-06","y":-21081.12},{"x":"2026-04-06","y":-21679.18},{"x":"2026-04-06","y":-22076.32},{"x":"2026-04-06","y":-22672.02},{"x":"2026-04-06","y":-23084.74},{"x":"2026-04-06","y":-23703.81},{"x":"2026-04-06","y":-24101.85},{"x":"2026-04-06","y":-24698.92}],"gpt":[],"meta":[],"claude":[],"gemini":[{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0}],"grok":[],"skynet":[]};
+  const SYSTEM_META = {"biobot":{"label":"BIOBOT"},"gpt":{"label":"GPT"},"meta":{"label":"META"},"claude":{"label":"CLAUDE"},"gemini":{"label":"GEMINI"},"grok":{"label":"GROK"},"skynet":{"label":"SKYNET"}}; 
 
-  function initCharts() {
-    
-    {
-      const canvas = document.getElementById('chart_H2_Primary');
-      if (!canvas) return;
-      if (canvas._chartInstance) canvas._chartInstance.destroy();
-      canvas._chartInstance = new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels: ["2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
-          datasets: [{
-            label: 'H2 Primary Equity ($)',
-            data: [883.22,380.54,-373.49,-848.17,-1560.2,-1128.44,-1338.38,-1653.29,-2067.13,-2687.88,-2666.54,-3073.41,-3683.73],
-            borderColor: '#a855f7',
-            backgroundColor: '#a855f722',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointHoverRadius: 6,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: '#1a1a28',
-              borderColor: '#a855f7',
-              borderWidth: 1,
-              titleColor: '#e8e8f0',
-              bodyColor: '#e8e8f0',
-              callbacks: {
-                label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            },
-            y: {
-              ticks: {
-                color: '#555570',
-                font: { family: 'JetBrains Mono', size: 10 },
-                callback: value => (value >= 0 ? '+' : '') + value + '$'
-              },
-              grid: { color: 'rgba(42,42,64,0.5)' }
+  function getEquityPalette(points) {
+    const finalPoint = points[points.length - 1] || { y: 0 };
+    const positive = finalPoint.y >= 0;
+    return {
+      line: positive ? '#00ff88' : '#ff4466',
+      fillTop: positive ? 'rgba(0,255,136,0.28)' : 'rgba(255,68,102,0.28)',
+      fillBottom: positive ? 'rgba(0,255,136,0.02)' : 'rgba(255,68,102,0.02)',
+    };
+  }
+
+  function destroyChart(chartId) {
+    const chart = CHART_INSTANCES.get(chartId);
+    if (chart) {
+      chart.destroy();
+      CHART_INSTANCES.delete(chartId);
+    }
+  }
+
+  function createEquityChart(canvas, chartId, label, points) {
+    if (!canvas || !Array.isArray(points) || points.length < 2) return;
+
+    destroyChart(chartId);
+
+    const palette = getEquityPalette(points);
+    const context = canvas.getContext('2d');
+    const gradient = context.createLinearGradient(0, 0, 0, canvas.clientHeight || 220);
+    gradient.addColorStop(0, palette.fillTop);
+    gradient.addColorStop(1, palette.fillBottom);
+
+    const chart = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: points.map(point => point.x),
+        datasets: [{
+          label,
+          data: points.map(point => point.y),
+          borderColor: palette.line,
+          backgroundColor: gradient,
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: palette.line,
+          pointBorderColor: palette.line,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: palette.line,
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
             }
           }
-        }
-      });
-    }
-
-    {
-      const canvas = document.getElementById('chart_H2_ALLIN');
-      if (!canvas) return;
-      if (canvas._chartInstance) canvas._chartInstance.destroy();
-      canvas._chartInstance = new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels: ["2026-04-01","2026-04-01"],
-          datasets: [{
-            label: 'H2 ALL-IN Equity ($)',
-            data: [35.15,87.87],
-            borderColor: '#f97316',
-            backgroundColor: '#f9731622',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
-            pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
-            pointHoverRadius: 6,
-          }]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: '#1a1a28',
-              borderColor: '#f97316',
-              borderWidth: 1,
-              titleColor: '#e8e8f0',
-              bodyColor: '#e8e8f0',
-              callbacks: {
-                label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
-              }
-            }
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: '#2a2a40' }
           },
-          scales: {
-            x: {
-              ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
-              grid: { color: 'rgba(42,42,64,0.5)' }
+          y: {
+            ticks: {
+              color: '#555570',
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: value => (value >= 0 ? '+' : '') + value + '$'
             },
-            y: {
-              ticks: {
-                color: '#555570',
-                font: { family: 'JetBrains Mono', size: 10 },
-                callback: value => (value >= 0 ? '+' : '') + value + '$'
-              },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            }
+            grid: { color: '#2a2a40' }
           }
         }
-      });
-    }
+      }
+    });
 
-    {
-      const canvas = document.getElementById('chart_H1');
-      if (!canvas) return;
-      if (canvas._chartInstance) canvas._chartInstance.destroy();
-      canvas._chartInstance = new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels: ["2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-06","2026-04-06"],
-          datasets: [{
-            label: 'H1 Equity ($)',
-            data: [-425.75,-1064.37,-233.36,-201.54,-624.46,-1258.85,-1674.6,-2298.23,-2709.92,-3327.45,-3282.57,-3215.25,-3627.96,-4247.03],
-            borderColor: '#eab308',
-            backgroundColor: '#eab30822',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointHoverRadius: 6,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: '#1a1a28',
-              borderColor: '#eab308',
-              borderWidth: 1,
-              titleColor: '#e8e8f0',
-              bodyColor: '#e8e8f0',
-              callbacks: {
-                label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            },
-            y: {
-              ticks: {
-                color: '#555570',
-                font: { family: 'JetBrains Mono', size: 10 },
-                callback: value => (value >= 0 ? '+' : '') + value + '$'
-              },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            }
-          }
-        }
-      });
-    }
+    CHART_INSTANCES.set(chartId, chart);
+  }
 
-    {
-      const canvas = document.getElementById('chart_M30');
+  function ensureBiobotCharts() {
+    Object.entries(BI0BOT_TIMEFRAME_CHARTS).forEach(([chartId, config]) => {
+      const canvas = document.getElementById(chartId);
       if (!canvas) return;
-      if (canvas._chartInstance) canvas._chartInstance.destroy();
-      canvas._chartInstance = new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels: ["2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
-          datasets: [{
-            label: 'M30 Equity ($)',
-            data: [-506.28,-1265.69,-1706.55,-2367.83,-2334.27,-2291.88,-2712.96,-3344.6,-3794.59,-4469.58,-4914.14,-5580.97,-6027.45,-6697.16,-7095.87,-7693.92,-8091.06,-8686.76],
-            borderColor: '#00ff88',
-            backgroundColor: '#00ff8822',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointHoverRadius: 6,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: '#1a1a28',
-              borderColor: '#00ff88',
-              borderWidth: 1,
-              titleColor: '#e8e8f0',
-              bodyColor: '#e8e8f0',
-              callbacks: {
-                label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            },
-            y: {
-              ticks: {
-                color: '#555570',
-                font: { family: 'JetBrains Mono', size: 10 },
-                callback: value => (value >= 0 ? '+' : '') + value + '$'
-              },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            }
-          }
-        }
-      });
-    }
+      createEquityChart(canvas, chartId, config.label, config.points);
+    });
+  }
 
-    {
-      const canvas = document.getElementById('chart_M15');
-      if (!canvas) return;
-      if (canvas._chartInstance) canvas._chartInstance.destroy();
-      canvas._chartInstance = new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels: ["2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
-          datasets: [{
-            label: 'M15 Equity ($)',
-            data: [2544.35,3744.27,4053.62,5359.11,4913.75,4245.71,3827.42,3199.98,2667.76,1869.43,1454.8,832.85,426.1,-184.03,-614.18,-1259.4,-1679.61,-2309.92,-2721.13,-3337.93,-3756.66,-4381.67,-4792.47,-5408.67,-5889.21,-6610.02,-7145.67,-7949.16,-7638.2,-7174.14,-7572.19,-8169.25],
-            borderColor: '#ec4899',
-            backgroundColor: '#ec489922',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-            pointHoverRadius: 6,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: '#1a1a28',
-              borderColor: '#ec4899',
-              borderWidth: 1,
-              titleColor: '#e8e8f0',
-              bodyColor: '#e8e8f0',
-              callbacks: {
-                label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            },
-            y: {
-              ticks: {
-                color: '#555570',
-                font: { family: 'JetBrains Mono', size: 10 },
-                callback: value => (value >= 0 ? '+' : '') + value + '$'
-              },
-              grid: { color: 'rgba(42,42,64,0.5)' }
-            }
-          }
-        }
-      });
+  function ensureSystemChart(system) {
+    const points = SYSTEM_EQUITY_CURVES[system];
+    if (!Array.isArray(points) || points.length < 2) return;
+    const canvas = document.querySelector('canvas[data-system-chart="' + system + '"]');
+    if (!canvas) return;
+    const label = (SYSTEM_META[system]?.label || system.toUpperCase()) + ' Equity ($)';
+    createEquityChart(canvas, 'system_chart_' + system, label, points);
+  }
+
+  function initCharts(activeSystem) {
+    if (activeSystem === 'biobot') {
+      ensureBiobotCharts();
+      return;
     }
+    ensureSystemChart(activeSystem);
   }
 
   const VALID_SYSTEMS = ["biobot","gpt","meta","claude","gemini","grok","skynet"];
@@ -2194,6 +2037,11 @@
       });
 
       updateStatsGrid(nextSystem);
+      initCharts(nextSystem);
+      requestAnimationFrame(() => {
+        const panelChart = CHART_INSTANCES.get('system_chart_' + nextSystem);
+        if (panelChart) panelChart.resize();
+      });
       if (syncHash) setHash(nextSystem);
     }
 
@@ -2230,7 +2078,7 @@
         const activeSystem = getRequestedSystem();
         oldContainer.innerHTML = newContainer.innerHTML;
         bindSystemPanels();
-        initCharts();
+        initCharts(activeSystem);
         window.setActiveSystem(activeSystem, false);
         console.log('Journal refreshed');
       })
@@ -2238,7 +2086,7 @@
   }
 
   bindSystemPanels();
-  initCharts();
+  initCharts(getRequestedSystem());
 
   setTimeout(() => reloadWithActivePanel(), 300000);
   setInterval(() => refreshContainerIfChanged(), 300000);
