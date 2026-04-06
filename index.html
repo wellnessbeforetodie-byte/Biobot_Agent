@@ -5,13 +5,19 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<script>
+// Force reload avec cache-bust aux 5 minutes
+setTimeout(() => {
+  window.location.href = window.location.pathname + '?t=' + Date.now();
+}, 300000);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Biobot — AI Trading Journal</title>
 <link rel="icon" type="image/png" href="biobot-logo-2.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
+  
   :root {
     --bg-primary: #0a0a0f;
     --bg-secondary: #12121a;
@@ -49,282 +55,125 @@
   .hero::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
     background: radial-gradient(circle at 30% 50%, rgba(168,85,247,0.04) 0%, transparent 50%),
-      radial-gradient(circle at 70% 50%, rgba(0,255,136,0.04) 0%, transparent 50%);
+                radial-gradient(circle at 70% 50%, rgba(0,255,136,0.04) 0%, transparent 50%);
     animation: pulse 8s ease-in-out infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: .5; }
-    50% { opacity: 1; }
-  }
+  @keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
 
   .hero-content { position: relative; z-index: 1; }
-  .logo-container { display: flex; align-items: center; justify-content: center; gap: 1.2rem; margin-bottom: 1rem; }
-  .logo { width: 72px; height: 72px; border-radius: 50%; border: 2px solid #7c3aed; box-shadow: var(--glow-purple); }
+
+  .logo-container { display:flex; align-items:center; justify-content:center; gap:1.2rem; margin-bottom:1rem; }
+  .logo { width:72px; height:72px; border-radius:50%; border:2px solid #7c3aed; box-shadow: var(--glow-purple); }
 
   h1 {
     font-family: 'JetBrains Mono', monospace;
     font-size: 2.2rem;
     font-weight: 700;
     background: linear-gradient(135deg, #00ff88 0%, #00d4aa 50%, #a855f7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .subtitle { color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; }
 
   .live-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    background: rgba(0,255,136,0.08);
-    border: 1px solid rgba(0,255,136,0.2);
-    border-radius: 50px;
-    padding: .4rem 1rem;
-    font-size: .8rem;
-    color: #00ff88;
-    font-family: 'JetBrains Mono', monospace;
-    margin-top: 1rem;
+    display:inline-flex; align-items:center; gap:.5rem;
+    background: rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.2);
+    border-radius:50px; padding:.4rem 1rem; font-size:.8rem;
+    color: #00ff88; font-family: 'JetBrains Mono', monospace; margin-top:1rem;
   }
 
-  .live-dot { width: 8px; height: 8px; background: #00ff88; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
-  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+  .live-dot { width:8px;height:8px;background:#00ff88;border-radius:50%;animation:blink 2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .container { max-width:1200px; margin:0 auto; padding:2rem 1.5rem; }
 
   .disclaimer {
-    background: rgba(168,85,247,0.08);
-    border: 1px solid rgba(168,85,247,0.2);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    font-size: .8rem;
-    color: var(--text-secondary);
-    text-align: center;
+    background: rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.2);
+    border-radius:8px; padding:1rem; margin-bottom:2rem;
+    font-size:.8rem; color:var(--text-secondary); text-align:center;
   }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:2rem; }
 
   .stat-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1rem 0.8rem;
-    transition: all .2s;
-    min-width: 0;
-    overflow: hidden;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:1rem 0.8rem;
+    transition:all .2s; min-width:0; overflow:hidden;
   }
-
-  .stat-card:hover { background: var(--bg-card-hover); border-color: #7c3aed; box-shadow: var(--glow-purple); }
-  .stat-label { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-family: 'JetBrains Mono', monospace; }
-  .stat-value { font-size: 1.3rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: .3rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .stat-card:hover { background:var(--bg-card-hover); border-color:#7c3aed; box-shadow:var(--glow-purple); }
+  .stat-label { font-size:.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-family:'JetBrains Mono',monospace; }
+  .stat-value { font-size:1.3rem; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:.3rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .stat-value.profit { color: #00ff88; }
   .stat-value.loss { color: #ff4466; }
   .stat-value.neutral { color: #a855f7; }
 
   .section-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.1rem;
-    color: #a855f7;
-    margin: 2rem 0 1rem;
-    padding-bottom: .5rem;
-    border-bottom: 1px solid var(--border);
+    font-family:'JetBrains Mono',monospace; font-size:1.1rem; color:#a855f7;
+    margin: 2rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
   }
 
-  .system-switcher {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-    background: rgba(18,18,26,0.9);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 1rem;
-    margin: 0 0 2rem;
-  }
-
-  .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-  }
-
-  .toolbar-copy {
-    color: var(--text-secondary);
-    font-size: 0.82rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .refresh-button {
-    appearance: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-    background: linear-gradient(135deg, rgba(0,212,170,0.16) 0%, rgba(168,85,247,0.2) 100%);
-    color: var(--text-primary);
-    border: 1px solid rgba(0,212,170,0.45);
-    border-radius: 999px;
-    padding: 0.8rem 1.2rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    cursor: pointer;
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
-  }
-
-  .refresh-button:hover {
-    transform: translateY(-1px);
-    border-color: rgba(0,255,136,0.65);
-    background: linear-gradient(135deg, rgba(0,255,136,0.2) 0%, rgba(168,85,247,0.26) 100%);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.28), 0 0 18px rgba(0,212,170,0.16);
-  }
-
-  .refresh-button:active { transform: translateY(0); }
-
-  .system-toggle {
-    appearance: none;
-    background: transparent;
-    border: 2px solid var(--system-color, var(--border));
-    color: var(--system-color, var(--text-primary));
-    border-radius: 999px;
-    padding: 0.7rem 1.1rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all .2s ease;
-  }
-
-  .system-toggle:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  }
-
-  .system-toggle.active {
-    background: var(--system-color, var(--accent-purple));
-    color: #fff;
-  }
-
-  .system-panel[hidden] { display: none !important; }
-
-  .placeholder-panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-  }
-
-  .global-chart {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .chart-container {
-    height: 220px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem;
-  }
-
-  .chart-note {
-    color: var(--text-secondary);
-    font-size: .78rem;
-    font-family: 'JetBrains Mono', monospace;
-    margin: .65rem 0 1.4rem;
-    text-align: center;
-  }
+  .global-chart { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; }
+  .chart-container { height: 220px; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1rem; }
 
   .tf-section { margin-bottom: 2rem; }
   .tf-header {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px 12px 0 0;
-    padding: 1.2rem 1.5rem;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px 12px 0 0;
+    padding:1.2rem 1.5rem;
   }
+  .tf-title { font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:700; }
+  .tf-desc { color:var(--text-secondary); font-size:.85rem; margin-top:.3rem; }
+  .tf-stats-row { display:flex; gap:1.5rem; margin-top:.8rem; flex-wrap:wrap; }
+  .tf-stat { font-family:'JetBrains Mono',monospace; font-size:.85rem; color:var(--text-secondary); }
+  .tf-stat.profit { color:#00ff88; font-weight:600; }
+  .tf-stat.loss { color:#ff4466; font-weight:600; }
 
-  .tf-title { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 700; }
-  .tf-desc { color: var(--text-secondary); font-size: .85rem; margin-top: .3rem; }
-  .tf-section .chart-container { border-radius: 0 0 12px 12px; border-top: none; }
-  .tf-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; padding: 1rem; background: var(--bg-secondary); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .tf-section .chart-container { border-radius:0 0 12px 12px; border-top:none; }
+  .tf-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; padding:1rem; background:var(--bg-secondary); border-left:1px solid var(--border); border-right:1px solid var(--border); }
 
   .trade-table-wrapper {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 2rem;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+    overflow:hidden; margin-bottom:2rem;
   }
 
-  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  table { width:100%; border-collapse:collapse; font-size:.85rem; }
 
   th {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .7rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-    padding: .8rem .6rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg-card);
-    position: sticky;
-    top: 0;
+    font-family:'JetBrains Mono',monospace; font-size:.7rem; text-transform:uppercase;
+    letter-spacing:1px; color:var(--text-muted); padding:.8rem .6rem; text-align:left;
+    border-bottom:1px solid var(--border); background:var(--bg-card); position:sticky; top:0;
   }
 
-  td { padding: .7rem .6rem; border-bottom: 1px solid rgba(42,42,64,0.5); vertical-align: middle; }
-  tr:hover td { background: rgba(168,85,247,0.03); }
-  td.profit { color: #00ff88; font-weight: 600; }
-  td.loss { color: #ff4466; font-weight: 600; }
-  .time { font-size: .7rem; color: var(--text-muted); }
+  td { padding:.7rem .6rem; border-bottom:1px solid rgba(42,42,64,0.5); vertical-align:middle; }
+  tr:hover td { background:rgba(168,85,247,0.03); }
+  td.profit { color:#00ff88; font-weight:600; }
+  td.loss { color:#ff4466; font-weight:600; }
+  tr.profit td:first-child { border-left:3px solid #00ff88; }
+  tr.loss td:first-child { border-left:3px solid #ff4466; }
+  .time { font-size:.7rem; color:var(--text-muted); }
 
   .tf-badge {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .7rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2px 6px;
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.7rem;
+    border:1px solid; border-radius:4px; padding:2px 6px;
   }
 
   .footer {
-    text-align: center;
-    padding: 2rem;
-    color: var(--text-muted);
-    font-size: .75rem;
-    font-family: 'JetBrains Mono', monospace;
-    border-top: 1px solid var(--border);
+    text-align:center; padding:2rem; color:var(--text-muted);
+    font-size:.75rem; font-family:'JetBrains Mono',monospace; border-top:1px solid var(--border);
   }
+  .footer a { color:#a855f7; text-decoration:none; }
 
-  .footer a { color: #a855f7; text-decoration: none; }
-
-  @media (max-width: 768px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .tf-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; padding: 0.8rem; }
-    h1 { font-size: 1.6rem; }
-    .stat-value { font-size: 1.1rem; }
-    .stat-label { font-size: .6rem; }
-    .stat-card { padding: 0.8rem 0.6rem; }
-    .toolbar { align-items: stretch; }
-    .refresh-button { width: 100%; }
+  @media (max-width:768px) {
+    .stats-grid { grid-template-columns:repeat(2,1fr); }
+    .tf-stats-grid { grid-template-columns:repeat(2,1fr); gap:0.5rem; padding:0.8rem; }
+    h1 { font-size:1.6rem; }
+    .stat-value { font-size:1.1rem; }
+    .stat-label { font-size:.6rem; }
+    .stat-card { padding:0.8rem 0.6rem; }
+    .tf-stats-row { gap:.8rem; }
   }
 </style>
 </head>
@@ -346,68 +195,26 @@
 </div>
 
 <div class="container">
-  <div class="toolbar">
-    <div class="toolbar-copy">Static GitHub Pages snapshot. Reload for the latest synced data.</div>
-    <button class="refresh-button" type="button" onclick="reloadWithActivePanel()">🔄 Refresh</button>
-  </div>
 
   <div class="disclaimer">
-    ⚠️ Not financial advice. Automated AI trading using Murphy, Nison & Van Tharp methodologies with BioSight visual validation & PulseGuard movement fatigue detection.
+    ⚠️ Not financial advice. Automated AI trading using Murphy, Nison & Van Tharp methodologies with BioSight™ visual validation & PulseGuard™ movement fatigue detection.
     <br><br>🐦 All trades are posted live on X — <a href="https://x.com/Agent_biobot" target="_blank" style="color:#a855f7;text-decoration:none;font-weight:600">@Agent_Biobot</a>
   </div>
 
-  <div class="system-switcher" role="group" aria-label="Trading systems">
-    
-    <button class="system-toggle active" type="button" data-system="biobot" data-panel="biobot" aria-pressed="true" style="--system-color:#a855f7">
-      🟣 BIOBOT
-    </button>
-
-    <button class="system-toggle" type="button" data-system="gpt" data-panel="gpt" aria-pressed="false" style="--system-color:#06b6d4">
-      <span style="display:inline-block;width:1em;height:1em;border-radius:50%;background:#06b6d4;vertical-align:middle"></span> GPT
-    </button>
-
-    <button class="system-toggle" type="button" data-system="meta" data-panel="meta" aria-pressed="false" style="--system-color:#f59e0b">
-      🟠 META
-    </button>
-
-    <button class="system-toggle" type="button" data-system="claude" data-panel="claude" aria-pressed="false" style="--system-color:#3b82f6">
-      🔵 CLAUDE
-    </button>
-
-    <button class="system-toggle" type="button" data-system="gemini" data-panel="gemini" aria-pressed="false" style="--system-color:#ef4444">
-      🔴 GEMINI
-    </button>
-
-    <button class="system-toggle" type="button" data-system="grok" data-panel="grok" aria-pressed="false" style="--system-color:#10b981">
-      🟢 GROK
-    </button>
-
-    <button class="system-toggle" type="button" data-system="skynet" data-panel="skynet" aria-pressed="false" style="--system-color:#888888">
-      ⚪ SKYNET
-    </button>
-  </div>
-
-  <div class="stats-grid" data-system-stats='{&quot;biobot&quot;:{&quot;label&quot;:&quot;BIOBOT&quot;,&quot;trades&quot;:81,&quot;winRate&quot;:23.456790123456788,&quot;totalPnl&quot;:-24144.886699999995,&quot;totalPips&quot;:-1856.400000000009,&quot;avgWin&quot;:482.2803947368421,&quot;avgLoss&quot;:537.2292612903225,&quot;hasPnl&quot;:true,&quot;hasPips&quot;:true,&quot;winCount&quot;:19,&quot;lossCount&quot;:62},&quot;gpt&quot;:{&quot;label&quot;:&quot;GPT&quot;,&quot;trades&quot;:4,&quot;winRate&quot;:0,&quot;totalPnl&quot;:0,&quot;totalPips&quot;:0,&quot;avgWin&quot;:0,&quot;avgLoss&quot;:0,&quot;hasPnl&quot;:false,&quot;hasPips&quot;:false,&quot;winCount&quot;:0,&quot;lossCount&quot;:0},&quot;meta&quot;:{&quot;label&quot;:&quot;META&quot;,&quot;trades&quot;:8,&quot;winRate&quot;:0,&quot;totalPnl&quot;:0,&quot;totalPips&quot;:0,&quot;avgWin&quot;:0,&quot;avgLoss&quot;:0,&quot;hasPnl&quot;:false,&quot;hasPips&quot;:false,&quot;winCount&quot;:0,&quot;lossCount&quot;:0},&quot;claude&quot;:{&quot;label&quot;:&quot;CLAUDE&quot;,&quot;trades&quot;:12,&quot;winRate&quot;:0,&quot;totalPnl&quot;:0,&quot;totalPips&quot;:0,&quot;avgWin&quot;:0,&quot;avgLoss&quot;:0,&quot;hasPnl&quot;:false,&quot;hasPips&quot;:false,&quot;winCount&quot;:0,&quot;lossCount&quot;:0},&quot;gemini&quot;:{&quot;label&quot;:&quot;GEMINI&quot;,&quot;trades&quot;:8,&quot;winRate&quot;:0,&quot;totalPnl&quot;:0,&quot;totalPips&quot;:0,&quot;avgWin&quot;:0,&quot;avgLoss&quot;:0,&quot;hasPnl&quot;:true,&quot;hasPips&quot;:true,&quot;winCount&quot;:0,&quot;lossCount&quot;:0},&quot;grok&quot;:{&quot;label&quot;:&quot;GROK&quot;,&quot;trades&quot;:2,&quot;winRate&quot;:0,&quot;totalPnl&quot;:0,&quot;totalPips&quot;:0,&quot;avgWin&quot;:0,&quot;avgLoss&quot;:0,&quot;hasPnl&quot;:false,&quot;hasPips&quot;:false,&quot;winCount&quot;:0,&quot;lossCount&quot;:0},&quot;skynet&quot;:{&quot;label&quot;:&quot;SKYNET&quot;,&quot;trades&quot;:0,&quot;winRate&quot;:0,&quot;totalPnl&quot;:0,&quot;totalPips&quot;:0,&quot;avgWin&quot;:0,&quot;avgLoss&quot;:0,&quot;hasPnl&quot;:false,&quot;hasPips&quot;:false,&quot;winCount&quot;:0,&quot;lossCount&quot;:0}}'>
-    <div class="stat-card"><div class="stat-label" data-stat-label="trades">BIOBOT Trades</div><div class="stat-value neutral" data-stat-value="trades">81</div></div>
-    <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss" data-stat-value="winRate">23.5%</div></div>
-    <div class="stat-card"><div class="stat-label">Total P&amp;L</div><div class="stat-value loss" data-stat-value="totalPnl">-24144.89$</div></div>
-    <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss" data-stat-value="totalPips">-1856.4</div></div>
-    <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit" data-stat-value="avgWin">+482.28$</div></div>
-    <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss" data-stat-value="avgLoss">-537.23$</div></div>
-  </div>
-
-  <div class="system-panel" data-panel="biobot">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0">
     <div class="section-title" style="margin-bottom:0">⏰ Performance by Timeframe</div>
-    
+    <button onclick="window.location.href=window.location.pathname+'?t='+Date.now()" style="background:rgba(0,255,136,0.15);color:#00ff88;border:2px solid #00ff88;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;cursor:pointer;border-radius:6px;letter-spacing:1px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.3)'" onmouseout="this.style.background='rgba(0,255,136,0.15)'">🔄 REFRESH</button>
+  </div>
+  
     <div class="tf-section">
-      <div class="tf-header" style="border-left:4px solid #a855f7">
-        <div class="tf-title" style="color:#a855f7">H2 Primary</div>
+      <div class="tf-header" style="border-left: 4px solid #a855f7">
+        <div class="tf-title" style="color: #a855f7">H2 Primary</div>
         <div class="tf-desc">Core strategy — 13 major pairs, score 8/10 min, conservative entries</div>
       </div>
       <div class="tf-stats-grid">
         <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">13</div></div>
         <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">23.1%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&amp;L</div><div class="stat-value loss">-3683.73$</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-3683.73$</div></div>
         <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-188.9</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+445.44$</div></div>
         <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-502.01$</div></div>
@@ -420,14 +227,14 @@
     </div>
 
     <div class="tf-section">
-      <div class="tf-header" style="border-left:4px solid #f97316">
-        <div class="tf-title" style="color:#f97316">H2 ALL-IN</div>
+      <div class="tf-header" style="border-left: 4px solid #f97316">
+        <div class="tf-title" style="color: #f97316">H2 ALL-IN</div>
         <div class="tf-desc">Aggressive scanner — 28 pairs including exotics, 24H, high volume</div>
       </div>
       <div class="tf-stats-grid">
         <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">2</div></div>
         <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&amp;L</div><div class="stat-value profit">+87.87$</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+87.87$</div></div>
         <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+4.2</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+43.93$</div></div>
         <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
@@ -440,14 +247,14 @@
     </div>
 
     <div class="tf-section">
-      <div class="tf-header" style="border-left:4px solid #eab308">
-        <div class="tf-title" style="color:#eab308">H1</div>
+      <div class="tf-header" style="border-left: 4px solid #eab308">
+        <div class="tf-title" style="color: #eab308">H1</div>
         <div class="tf-desc">Hourly momentum — 13 pairs, trend-following on 1H candles</div>
       </div>
       <div class="tf-stats-grid">
         <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">14</div></div>
         <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">28.6%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&amp;L</div><div class="stat-value loss">-4247.03$</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-4247.03$</div></div>
         <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-330.5</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+243.76$</div></div>
         <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-522.21$</div></div>
@@ -460,14 +267,14 @@
     </div>
 
     <div class="tf-section">
-      <div class="tf-header" style="border-left:4px solid #00ff88">
-        <div class="tf-title" style="color:#00ff88">M30</div>
-        <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight validation</div>
+      <div class="tf-header" style="border-left: 4px solid #00ff88">
+        <div class="tf-title" style="color: #00ff88">M30</div>
+        <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight™ validation</div>
       </div>
       <div class="tf-stats-grid">
         <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">18</div></div>
         <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">11.1%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&amp;L</div><div class="stat-value loss">-8686.76$</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-8686.76$</div></div>
         <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-458.9</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+37.98$</div></div>
         <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-547.67$</div></div>
@@ -480,14 +287,14 @@
     </div>
 
     <div class="tf-section">
-      <div class="tf-header" style="border-left:4px solid #ec4899">
-        <div class="tf-title" style="color:#ec4899">M15</div>
-        <div class="tf-desc">15-min scalping — 13 pairs, quick entries, no BioSight filter</div>
+      <div class="tf-header" style="border-left: 4px solid #ec4899">
+        <div class="tf-title" style="color: #ec4899">M15</div>
+        <div class="tf-desc">15-min scalping — 13 pairs, quick entries, no BioSight™ filter</div>
       </div>
       <div class="tf-stats-grid">
         <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">34</div></div>
         <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">23.5%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&amp;L</div><div class="stat-value loss">-7615.23$</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-7615.23$</div></div>
         <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-882.3</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+836.02$</div></div>
         <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-550.13$</div></div>
@@ -499,1487 +306,854 @@
       </div>
     </div>
 
-    <div class="section-title">📋 All Trades</div>
-    <div class="trade-table-wrapper">
+  <div class="section-title">📋 All Trades</div>
+  <div class="trade-table-wrapper">
     <table>
-      <thead>
-        <tr>
-          <th>Date/Time</th>
-          <th>Pair</th>
-          <th>Direction</th>
-          <th>TF</th>
-          <th>Entry</th>
-          <th>Exit</th>
-          <th>P&amp;L</th>
-          <th>Score</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody><tr>
+      <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
+      <tbody><tr class="profit">
       <td>2026-04-06<br><span class="time">06:46 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.69046</td>
-      <td>0.69180</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+329.46$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+13.4</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-06<br><span class="time">06:46 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.69046</td>
-      <td>0.69183</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+224.56$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+13.7</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:57 a.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.60537</td>
-      <td>1.61037</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-597.07$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-50.0</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:57 a.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.60537</td>
-      <td>1.61037</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-398.05$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-50.0</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:57 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>0.79995</td>
-      <td>0.79667</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-619.07$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-32.8</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:57 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>0.79995</td>
-      <td>0.79667</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-412.71$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-32.8</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:50 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.79979</td>
-      <td>0.79755</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-595.71$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-22.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:50 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.79979</td>
-      <td>0.79755</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-397.14$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-22.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:43 a.m.</span></td>
       <td><strong>GBP/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.32101</td>
-      <td>1.32370</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-598.06$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-26.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:43 a.m.</span></td>
       <td><strong>GBP/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.32101</td>
-      <td>1.32370</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-398.70$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-26.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:42 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.15143</td>
-      <td>1.15514</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-610.32$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-37.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">03:42 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.15143</td>
-      <td>1.15514</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-406.88$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-37.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-06<br><span class="time">03:41 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>0.79846</td>
-      <td>0.79857</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="profit">+21.34$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+1.1</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">02:52 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.15141</td>
-      <td>1.15360</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-620.75$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-21.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">02:52 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.15141</td>
-      <td>1.15360</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-413.84$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-21.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-05<br><span class="time">10:09 p.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.15380</td>
-      <td>1.15185</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+464.05$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+19.5</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-05<br><span class="time">10:09 p.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.15381</td>
-      <td>1.15185</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+310.96$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+19.6</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-05<br><span class="time">10:09 p.m.</span></td>
       <td><strong>NZD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>0.56843</td>
-      <td>0.56999</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-314.91$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-15.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-05<br><span class="time">10:09 p.m.</span></td>
       <td><strong>NZD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>0.56843</td>
-      <td>0.56999</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-209.94$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-15.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">04:12 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.60677</td>
-      <td>1.60461</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-669.71$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-21.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">04:12 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.60677</td>
-      <td>1.60461</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-446.48$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-21.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">04:10 p.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.05726</td>
-      <td>1.05412</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-803.49$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-31.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">04:10 p.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.05726</td>
-      <td>1.05412</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-535.66$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-31.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-03<br><span class="time">04:10 p.m.</span></td>
       <td><strong>NZD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>0.57442</td>
-      <td>0.57147</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="profit">+431.76$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+29.5</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">04:10 p.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.05726</td>
-      <td>1.05488</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-712.03$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-23.8</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">04:10 p.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.05726</td>
-      <td>1.05488</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-474.69$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-23.8</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">08:30 a.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.05710</td>
-      <td>1.05434</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-720.81$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-27.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-03<br><span class="time">08:30 a.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.05710</td>
-      <td>1.05434</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-480.54$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-27.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:11 p.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.79896</td>
-      <td>0.79765</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-616.20$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-13.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:11 p.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.79896</td>
-      <td>0.79765</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-410.80$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-13.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:07 p.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.05635</td>
-      <td>1.05320</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-754.02$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-31.5</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:07 p.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>1.05635</td>
-      <td>1.05320</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="loss">-502.68$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-31.5</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:04 p.m.</span></td>
       <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.87304</td>
-      <td>0.87153</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-666.83$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-15.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:04 p.m.</span></td>
       <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.87304</td>
-      <td>0.87153</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-444.55$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-15.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-02<br><span class="time">05:04 p.m.</span></td>
       <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>0.87137</td>
-      <td>0.87153</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="profit">+67.32$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+1.6</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-02<br><span class="time">05:04 p.m.</span></td>
       <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>0.87137</td>
-      <td>0.87153</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="profit">+44.88$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+1.6</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:04 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.60746</td>
-      <td>1.60433</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-674.99$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-31.3</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">05:04 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.60746</td>
-      <td>1.60433</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-449.99$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-31.3</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:36 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.15240</td>
-      <td>1.15443</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-625.01$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-20.3</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:36 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.15239</td>
-      <td>1.15443</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-418.73$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-20.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:36 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>0.68826</td>
-      <td>0.69075</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-617.53$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-24.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:36 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>0.68826</td>
-      <td>0.69075</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-411.69$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-24.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:35 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.68804</td>
-      <td>0.69010</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-616.80$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-20.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:35 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.68804</td>
-      <td>0.69010</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-411.20$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-20.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:06 a.m.</span></td>
       <td><strong>GBP/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.92287</td>
-      <td>1.91634</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-630.32$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-65.3</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">10:06 a.m.</span></td>
       <td><strong>GBP/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.92287</td>
-      <td>1.91634</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-420.21$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-65.3</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">09:57 a.m.</span></td>
       <td><strong>GBP/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>1.92434</td>
-      <td>1.91653</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-623.63$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-78.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">09:57 a.m.</span></td>
       <td><strong>GBP/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>1.92434</td>
-      <td>1.91653</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-415.75$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-78.1</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">09:49 a.m.</span></td>
       <td><strong>EUR/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.67726</td>
-      <td>1.67351</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-631.63$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-37.5</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">09:49 a.m.</span></td>
       <td><strong>EUR/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.67726</td>
-      <td>1.67351</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-421.09$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-37.5</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">08:39 a.m.</span></td>
       <td><strong>EUR/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.67795</td>
-      <td>1.67381</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-645.22$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-41.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">08:39 a.m.</span></td>
       <td><strong>EUR/AUD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.67795</td>
-      <td>1.67381</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-430.15$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-41.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">01:48 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.15903</td>
-      <td>1.15257</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-610.13$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-64.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">01:48 a.m.</span></td>
       <td><strong>EUR/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.15903</td>
-      <td>1.15257</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-406.75$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-64.6</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-02<br><span class="time">01:47 a.m.</span></td>
       <td><strong>NZD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 Primary</span></td>
-      <td>0.57442</td>
-      <td>0.57039</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
       <td class="profit">+883.22$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+40.3</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">01:17 a.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.61027</td>
-      <td>1.60428</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-621.95$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-59.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-02<br><span class="time">01:17 a.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.61027</td>
-      <td>1.60428</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-414.63$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-59.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">09:19 p.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-798.33$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-15.2</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">09:19 p.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-532.22$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-15.2</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">09:18 p.m.</span></td>
       <td><strong>EUR/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-627.44$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-89.5</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">09:18 p.m.</span></td>
       <td><strong>EUR/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-418.29$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-89.5</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">02:25 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-634.38$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-33.8</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">02:25 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-422.92$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-33.8</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">12:47 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="profit">+31.82$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+1.7</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">12:46 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="profit">+42.39$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+1.6</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">12:46 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="profit">+33.56$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+1.9</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">10:02 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 ALL-IN</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#f97316;color:#f97316">H2 ALL-IN</span></td>
       <td class="profit">+52.72$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+2.1</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">10:02 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2 ALL-IN</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#f97316;color:#f97316">H2 ALL-IN</span></td>
       <td class="profit">+35.15$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+2.1</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">10:02 a.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-661.28$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-26.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">10:02 a.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-440.85$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-26.4</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">10:00 a.m.</span></td>
       <td><strong>GBP/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-759.42$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-50.0</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">10:00 a.m.</span></td>
       <td><strong>GBP/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
       <td class="loss">-506.28$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-50.0</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">09:58 a.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-668.04$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-28.2</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">09:58 a.m.</span></td>
       <td><strong>GBP/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="loss">-445.36$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-28.2</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">09:56 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+1305.49$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+24.8</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">08:56 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+309.35$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+13.6</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">08:45 a.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="profit">+831.01$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+29.6</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">08:44 a.m.</span></td>
       <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+1199.92$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+35.2</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="profit">
       <td>2026-04-01<br><span class="time">07:51 a.m.</span></td>
       <td><strong>USD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
       <td class="profit">+2544.35$</td>
-      <td>—</td>
-      <td>WIN</td>
+      <td>+32.2</td>
+      <td>—R</td>
+      <td>✅</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">06:07 a.m.</span></td>
       <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-638.62$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-12.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr>
-<tr>
+<tr class="loss">
       <td>2026-04-01<br><span class="time">06:07 a.m.</span></td>
       <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>—</td>
-      <td>—</td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
       <td class="loss">-425.75$</td>
-      <td>—</td>
-      <td>LOSS</td>
+      <td>-12.9</td>
+      <td>—R</td>
+      <td>❌</td>
     </tr></tbody>
     </table>
-  </div>
   </div>
 
-  <div class="system-panel" data-panel="gpt" hidden>
-    <div class="section-title" style="margin-bottom:0">📈 Equity Curve</div>
-    <div class="chart-container system-chart-container">
-      <canvas id="system_chart_gpt" data-system-chart="gpt"></canvas>
-    </div>
-    
-    <div class="section-title"><span style="display:inline-block;width:1em;height:1em;border-radius:50%;background:#06b6d4;vertical-align:middle"></span> GPT Trades</div>
-    <div class="trade-table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Date/Time</th>
-          <th>Pair</th>
-          <th>Direction</th>
-          <th>TF</th>
-          <th>Entry</th>
-          <th>Exit</th>
-          <th>P&amp;L</th>
-          <th>Score</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody><tr>
-      <td>2026-04-06<br><span class="time">02:31 a.m.</span></td>
-      <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.80065</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>2.30</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">12:01 a.m.</span></td>
-      <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.05792</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>2.62</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">10:31 p.m.</span></td>
-      <td><strong>GBP/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.91161</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>3.80</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">10:01 p.m.</span></td>
-      <td><strong>EUR/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.66830</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>4.46</td>
-      <td>EXECUTED</td>
-    </tr></tbody>
-    </table>
-  </div>
-  </div>
-<div class="system-panel" data-panel="meta" hidden>
-    <div class="section-title" style="margin-bottom:0">📈 Equity Curve</div>
-    <div class="chart-container system-chart-container">
-      <canvas id="system_chart_meta" data-system-chart="meta"></canvas>
-    </div>
-    
-    <div class="section-title">🟠 META Trades</div>
-    <div class="trade-table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Date/Time</th>
-          <th>Pair</th>
-          <th>Direction</th>
-          <th>TF</th>
-          <th>Entry</th>
-          <th>Exit</th>
-          <th>P&amp;L</th>
-          <th>Score</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody><tr>
-      <td>2026-04-06<br><span class="time">06:49 a.m.</span></td>
-      <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.69289</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.58</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">06:49 a.m.</span></td>
-      <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.69293</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.79</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">06:48 a.m.</span></td>
-      <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2</span></td>
-      <td>0.69294</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>7.65</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">04:01 a.m.</span></td>
-      <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.87257</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>9.09</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">03:01 a.m.</span></td>
-      <td><strong>USD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.79975</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>7.37</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">02:30 a.m.</span></td>
-      <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.69075</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>7.81</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">01:30 a.m.</span></td>
-      <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.69108</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>9.14</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">11:00 p.m.</span></td>
-      <td><strong>AUD/USD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.69047</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>7.39</td>
-      <td>EXECUTED</td>
-    </tr></tbody>
-    </table>
-  </div>
-  </div>
-<div class="system-panel" data-panel="claude" hidden>
-    <div class="section-title" style="margin-bottom:0">📈 Equity Curve</div>
-    <div class="chart-container system-chart-container">
-      <canvas id="system_chart_claude" data-system-chart="claude"></canvas>
-    </div>
-    
-    <div class="section-title">🔵 CLAUDE Trades</div>
-    <div class="trade-table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Date/Time</th>
-          <th>Pair</th>
-          <th>Direction</th>
-          <th>TF</th>
-          <th>Entry</th>
-          <th>Exit</th>
-          <th>P&amp;L</th>
-          <th>Score</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody><tr>
-      <td>2026-04-06<br><span class="time">04:30 a.m.</span></td>
-      <td><strong>EUR/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.66804</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">04:00 a.m.</span></td>
-      <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2</span></td>
-      <td>0.79701</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>10.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">03:30 a.m.</span></td>
-      <td><strong>GBP/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.91176</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.50</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">03:00 a.m.</span></td>
-      <td><strong>USD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2</span></td>
-      <td>0.79970</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>10.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">03:00 a.m.</span></td>
-      <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.87256</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.50</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">03:00 a.m.</span></td>
-      <td><strong>EUR/GBP</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>0.87254</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.50</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">03:00 a.m.</span></td>
-      <td><strong>GBP/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>1.91181</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>9.50</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">03:00 a.m.</span></td>
-      <td><strong>EUR/CAD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.60733</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>10.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">12:30 a.m.</span></td>
-      <td><strong>NZD/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>0.57001</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">12:00 a.m.</span></td>
-      <td><strong>GBP/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.05779</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-06<br><span class="time">12:00 a.m.</span></td>
-      <td><strong>GBP/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.91291</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">10:30 p.m.</span></td>
-      <td><strong>EUR/AUD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.66744</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>8.50</td>
-      <td>EXECUTED</td>
-    </tr></tbody>
-    </table>
-  </div>
-  </div>
-<div class="system-panel" data-panel="gemini" hidden>
-    <div class="section-title" style="margin-bottom:0">📈 Equity Curve</div>
-    <div class="chart-container system-chart-container">
-      <canvas id="system_chart_gemini" data-system-chart="gemini"></canvas>
-    </div>
-    
-    <div class="section-title">🔴 GEMINI Trades</div>
-    <div class="trade-table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Date/Time</th>
-          <th>Pair</th>
-          <th>Direction</th>
-          <th>TF</th>
-          <th>Entry</th>
-          <th>Exit</th>
-          <th>P&amp;L</th>
-          <th>Score</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody><tr>
-      <td>2026-04-05<br><span class="time">05:21 p.m.</span></td>
-      <td><strong>GBP/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>1.31908</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>9.50</td>
-      <td>OPEN</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">05:21 p.m.</span></td>
-      <td><strong>GBP/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>1.31908</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>10.00</td>
-      <td>OPEN</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">05:21 p.m.</span></td>
-      <td><strong>EUR/NZD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">M30</span></td>
-      <td>2.02514</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>10.00</td>
-      <td>OPEN</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">05:21 p.m.</span></td>
-      <td><strong>GBP/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>1.31908</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>10.00</td>
-      <td>OPEN</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">05:21 p.m.</span></td>
-      <td><strong>EUR/NZD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>2.02510</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>10.00</td>
-      <td>OPEN</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">05:21 p.m.</span></td>
-      <td><strong>GBP/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H2</span></td>
-      <td>1.31908</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>10.00</td>
-      <td>OPEN</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">05:21 p.m.</span></td>
-      <td><strong>EUR/NZD</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2</span></td>
-      <td>2.02510</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>10.00</td>
-      <td>OPEN</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">05:32 p.m.</span></td>
-      <td><strong>NZD/CHF</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">M15</span></td>
-      <td>0.45497</td>
-      <td>—</td>
-      <td class="profit">+0.00$</td>
-      <td>10.00</td>
-      <td>OPEN</td>
-    </tr></tbody>
-    </table>
-  </div>
-  </div>
-<div class="system-panel" data-panel="grok" hidden>
-    <div class="section-title" style="margin-bottom:0">📈 Equity Curve</div>
-    <div class="chart-container system-chart-container">
-      <canvas id="system_chart_grok" data-system-chart="grok"></canvas>
-    </div>
-    
-    <div class="section-title">🟢 GROK Trades</div>
-    <div class="trade-table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Date/Time</th>
-          <th>Pair</th>
-          <th>Direction</th>
-          <th>TF</th>
-          <th>Entry</th>
-          <th>Exit</th>
-          <th>P&amp;L</th>
-          <th>Score</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody><tr>
-      <td>2026-04-06<br><span class="time">12:00 a.m.</span></td>
-      <td><strong>CAD/CHF</strong></td>
-      <td>BUY</td>
-      <td><span class="tf-badge">H2</span></td>
-      <td>0.57463</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>9.00</td>
-      <td>EXECUTED</td>
-    </tr>
-<tr>
-      <td>2026-04-05<br><span class="time">11:00 p.m.</span></td>
-      <td><strong>EUR/USD</strong></td>
-      <td>SELL</td>
-      <td><span class="tf-badge">H1</span></td>
-      <td>1.15198</td>
-      <td>—</td>
-      <td class="">—</td>
-      <td>9.00</td>
-      <td>EXECUTED</td>
-    </tr></tbody>
-    </table>
-  </div>
-  </div>
-<div class="system-panel" data-panel="skynet" hidden>
-    <div class="section-title" style="margin-bottom:0">📈 Equity Curve</div>
-    <div class="chart-container system-chart-container">
-      <canvas id="system_chart_skynet" data-system-chart="skynet"></canvas>
-    </div>
-    <div class="chart-note">Aucune courbe disponible sans P&amp;L réalisé</div>
-    <div class="section-title">⚪ SKYNET Trades</div>
-    <div class="placeholder-panel"><div>Aucun trade enregistré</div></div>
-  </div>
 </div>
 
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
-  <p>Murphy × Nison × Van Tharp | BioSight | PulseGuard</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-06, 7:19:03 a.m. (Eastern)</p>
+  <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-06, 8:20:04 a.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
 <script>
   Chart.defaults.color = '#555570';
   Chart.defaults.font.family = "'JetBrains Mono', monospace";
-  const CHART_INSTANCES = new Map();
-  const BIOBOT_TIMEFRAME_CHARTS = {"chart_H2_Primary":{"label":"H2 Primary Equity ($)","points":[{"x":"2026-04-02","y":0},{"x":"2026-04-02","y":883.22},{"x":"2026-04-02","y":380.54},{"x":"2026-04-02","y":-373.49},{"x":"2026-04-03","y":-848.17},{"x":"2026-04-03","y":-1560.2},{"x":"2026-04-03","y":-1128.44},{"x":"2026-04-06","y":-1338.38},{"x":"2026-04-06","y":-1653.29},{"x":"2026-04-06","y":-2067.13},{"x":"2026-04-06","y":-2687.88},{"x":"2026-04-06","y":-2666.54},{"x":"2026-04-06","y":-3073.41},{"x":"2026-04-06","y":-3683.73}]},"chart_H2_ALLIN":{"label":"H2 ALL-IN Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":35.15},{"x":"2026-04-01","y":87.87}]},"chart_H1":{"label":"H1 Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":-425.75},{"x":"2026-04-01","y":-1064.37},{"x":"2026-04-01","y":-233.36},{"x":"2026-04-01","y":-201.54},{"x":"2026-04-01","y":-624.46},{"x":"2026-04-01","y":-1258.85},{"x":"2026-04-02","y":-1674.6},{"x":"2026-04-02","y":-2298.23},{"x":"2026-04-02","y":-2709.92},{"x":"2026-04-02","y":-3327.45},{"x":"2026-04-02","y":-3282.57},{"x":"2026-04-02","y":-3215.25},{"x":"2026-04-06","y":-3627.96},{"x":"2026-04-06","y":-4247.03}]},"chart_M30":{"label":"M30 Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":-506.28},{"x":"2026-04-01","y":-1265.69},{"x":"2026-04-01","y":-1706.55},{"x":"2026-04-01","y":-2367.83},{"x":"2026-04-01","y":-2334.27},{"x":"2026-04-01","y":-2291.88},{"x":"2026-04-02","y":-2712.96},{"x":"2026-04-02","y":-3344.6},{"x":"2026-04-02","y":-3794.59},{"x":"2026-04-02","y":-4469.58},{"x":"2026-04-02","y":-4914.14},{"x":"2026-04-02","y":-5580.97},{"x":"2026-04-03","y":-6027.45},{"x":"2026-04-03","y":-6697.16},{"x":"2026-04-06","y":-7095.87},{"x":"2026-04-06","y":-7693.92},{"x":"2026-04-06","y":-8091.06},{"x":"2026-04-06","y":-8686.76}]},"chart_M15":{"label":"M15 Equity ($)","points":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":2544.35},{"x":"2026-04-01","y":3744.27},{"x":"2026-04-01","y":4053.62},{"x":"2026-04-01","y":5359.11},{"x":"2026-04-01","y":4913.75},{"x":"2026-04-01","y":4245.71},{"x":"2026-04-02","y":3827.42},{"x":"2026-04-02","y":3199.98},{"x":"2026-04-02","y":2667.76},{"x":"2026-04-02","y":1869.43},{"x":"2026-04-02","y":1454.8},{"x":"2026-04-02","y":832.85},{"x":"2026-04-02","y":426.1},{"x":"2026-04-02","y":-184.03},{"x":"2026-04-02","y":-614.18},{"x":"2026-04-02","y":-1259.4},{"x":"2026-04-02","y":-1679.61},{"x":"2026-04-02","y":-2309.92},{"x":"2026-04-02","y":-2721.13},{"x":"2026-04-02","y":-3337.93},{"x":"2026-04-02","y":-3756.66},{"x":"2026-04-02","y":-4381.67},{"x":"2026-04-02","y":-4792.47},{"x":"2026-04-02","y":-5408.67},{"x":"2026-04-03","y":-5889.21},{"x":"2026-04-03","y":-6610.02},{"x":"2026-04-03","y":-7145.67},{"x":"2026-04-03","y":-7949.16},{"x":"2026-04-06","y":-7638.2},{"x":"2026-04-06","y":-7174.14},{"x":"2026-04-06","y":-7572.19},{"x":"2026-04-06","y":-8169.25},{"x":"2026-04-06","y":-7944.69},{"x":"2026-04-06","y":-7615.23}]}};
-  const SYSTEM_EQUITY_CURVES = {"biobot":[{"x":"2026-04-01","y":0},{"x":"2026-04-01","y":-425.75},{"x":"2026-04-01","y":-1064.37},{"x":"2026-04-01","y":1479.98},{"x":"2026-04-01","y":2679.89},{"x":"2026-04-01","y":3510.91},{"x":"2026-04-01","y":3820.26},{"x":"2026-04-01","y":5125.75},{"x":"2026-04-01","y":4680.39},{"x":"2026-04-01","y":4012.35},{"x":"2026-04-01","y":3506.07},{"x":"2026-04-01","y":2746.66},{"x":"2026-04-01","y":2305.8},{"x":"2026-04-01","y":1644.52},{"x":"2026-04-01","y":1679.67},{"x":"2026-04-01","y":1732.39},{"x":"2026-04-01","y":1765.95},{"x":"2026-04-01","y":1808.34},{"x":"2026-04-01","y":1840.16},{"x":"2026-04-01","y":1417.24},{"x":"2026-04-01","y":782.86},{"x":"2026-04-02","y":364.56},{"x":"2026-04-02","y":-262.87},{"x":"2026-04-02","y":-795.1},{"x":"2026-04-02","y":-1593.43},{"x":"2026-04-02","y":-2008.05},{"x":"2026-04-02","y":-2630},{"x":"2026-04-02","y":-1746.78},{"x":"2026-04-02","y":-2153.53},{"x":"2026-04-02","y":-2763.66},{"x":"2026-04-02","y":-3193.81},{"x":"2026-04-02","y":-3839.03},{"x":"2026-04-02","y":-4260.12},{"x":"2026-04-02","y":-4891.76},{"x":"2026-04-02","y":-5307.51},{"x":"2026-04-02","y":-5931.14},{"x":"2026-04-02","y":-6351.35},{"x":"2026-04-02","y":-6981.66},{"x":"2026-04-02","y":-7392.87},{"x":"2026-04-02","y":-8009.67},{"x":"2026-04-02","y":-8421.36},{"x":"2026-04-02","y":-9038.89},{"x":"2026-04-02","y":-9457.61},{"x":"2026-04-02","y":-10082.63},{"x":"2026-04-02","y":-10532.62},{"x":"2026-04-02","y":-11207.61},{"x":"2026-04-02","y":-11162.73},{"x":"2026-04-02","y":-11095.41},{"x":"2026-04-02","y":-11539.97},{"x":"2026-04-02","y":-12206.8},{"x":"2026-04-02","y":-12709.49},{"x":"2026-04-02","y":-13463.51},{"x":"2026-04-02","y":-13874.31},{"x":"2026-04-02","y":-14490.51},{"x":"2026-04-03","y":-14971.05},{"x":"2026-04-03","y":-15691.86},{"x":"2026-04-03","y":-16166.54},{"x":"2026-04-03","y":-16878.57},{"x":"2026-04-03","y":-16446.81},{"x":"2026-04-03","y":-16982.47},{"x":"2026-04-03","y":-17785.95},{"x":"2026-04-03","y":-18232.43},{"x":"2026-04-03","y":-18902.14},{"x":"2026-04-06","y":-19112.08},{"x":"2026-04-06","y":-19427},{"x":"2026-04-06","y":-19116.04},{"x":"2026-04-06","y":-18651.98},{"x":"2026-04-06","y":-19065.82},{"x":"2026-04-06","y":-19686.57},{"x":"2026-04-06","y":-19665.22},{"x":"2026-04-06","y":-20072.1},{"x":"2026-04-06","y":-20682.42},{"x":"2026-04-06","y":-21081.12},{"x":"2026-04-06","y":-21679.18},{"x":"2026-04-06","y":-22076.32},{"x":"2026-04-06","y":-22672.02},{"x":"2026-04-06","y":-23084.74},{"x":"2026-04-06","y":-23703.81},{"x":"2026-04-06","y":-24101.85},{"x":"2026-04-06","y":-24698.92},{"x":"2026-04-06","y":-24474.35},{"x":"2026-04-06","y":-24144.89}],"gpt":[{"x":"2026-04-06","y":0},{"x":"2026-04-06","y":-270.03}],"meta":[{"x":"2026-04-06","y":0},{"x":"2026-04-06","y":-1262.48}],"claude":[{"x":"2026-04-06","y":0},{"x":"2026-04-06","y":409.8}],"gemini":[{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0},{"x":"2026-04-05","y":0}],"grok":[{"x":"2026-04-06","y":0},{"x":"2026-04-06","y":-484.69}],"skynet":[]};
-  const SYSTEM_META = {"biobot":{"label":"BIOBOT"},"gpt":{"label":"GPT"},"meta":{"label":"META"},"claude":{"label":"CLAUDE"},"gemini":{"label":"GEMINI"},"grok":{"label":"GROK"},"skynet":{"label":"SKYNET"}}; 
 
-  function getEquityPalette(points) {
-    const finalPoint = points[points.length - 1] || { y: 0 };
-    const positive = finalPoint.y >= 0;
-    return {
-      line: positive ? '#00ff88' : '#ff4466',
-      fillTop: positive ? 'rgba(0,255,136,0.28)' : 'rgba(255,68,102,0.28)',
-      fillBottom: positive ? 'rgba(0,255,136,0.02)' : 'rgba(255,68,102,0.02)',
-    };
-  }
-
-  function destroyChart(chartId) {
-    const chart = CHART_INSTANCES.get(chartId);
-    if (chart) {
-      chart.destroy();
-      CHART_INSTANCES.delete(chartId);
-    }
-  }
-
-  function createEquityChart(canvas, chartId, label, points) {
-    if (!canvas || !Array.isArray(points) || points.length < 2) return;
-
-    destroyChart(chartId);
-
-    const palette = getEquityPalette(points);
-    const context = canvas.getContext('2d');
-    const gradient = context.createLinearGradient(0, 0, 0, canvas.clientHeight || 220);
-    gradient.addColorStop(0, palette.fillTop);
-    gradient.addColorStop(1, palette.fillBottom);
-
-    const chart = new Chart(canvas, {
+  // Per-TF charts
+  
+    new Chart(document.getElementById('chart_H2_Primary'), {
       type: 'line',
       data: {
-        labels: points.map(point => point.x),
+        labels: ["2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
         datasets: [{
-          label,
-          data: points.map(point => point.y),
-          borderColor: palette.line,
-          backgroundColor: gradient,
+          label: 'H2 Primary Equity ($)',
+          data: [883.22,380.54,-373.49,-848.17,-1560.2,-1128.44,-1338.38,-1653.29,-2067.13,-2687.88,-2666.54,-3073.41,-3683.73],
+          borderColor: '#a855f7',
+          backgroundColor: '#a855f722',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
           pointHoverRadius: 6,
-          pointBackgroundColor: palette.line,
-          pointBorderColor: palette.line,
         }]
       },
       options: {
@@ -1989,7 +1163,7 @@
           legend: { display: false },
           tooltip: {
             backgroundColor: '#1a1a28',
-            borderColor: palette.line,
+            borderColor: '#a855f7',
             borderWidth: 1,
             titleColor: '#e8e8f0',
             bodyColor: '#e8e8f0',
@@ -2001,180 +1175,249 @@
         scales: {
           x: {
             ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
-            grid: { color: '#2a2a40' }
+            grid: { color: 'rgba(42,42,64,0.5)' }
           },
           y: {
-            ticks: {
-              color: '#555570',
+            ticks: { 
+              color: '#555570', 
               font: { family: 'JetBrains Mono', size: 10 },
-              callback: value => (value >= 0 ? '+' : '') + value + '$'
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
             },
-            grid: { color: '#2a2a40' }
+            grid: { color: 'rgba(42,42,64,0.5)' }
           }
         }
       }
     });
 
-    CHART_INSTANCES.set(chartId, chart);
-  }
-
-  function ensureBiobotCharts() {
-    Object.entries(BIOBOT_TIMEFRAME_CHARTS).forEach(([chartId, config]) => {
-      const canvas = document.getElementById(chartId);
-      if (!canvas) return;
-      createEquityChart(canvas, chartId, config.label, config.points);
-    });
-  }
-
-  function ensureSystemChart(system) {
-    const points = SYSTEM_EQUITY_CURVES[system];
-    if (!Array.isArray(points) || points.length < 2) return;
-    const canvas = document.querySelector('canvas[data-system-chart="' + system + '"]');
-    if (!canvas) return;
-    const label = (SYSTEM_META[system]?.label || system.toUpperCase()) + ' Equity ($)';
-    createEquityChart(canvas, 'system_chart_' + system, label, points);
-  }
-
-  function initCharts(activeSystem) {
-    if (activeSystem === 'biobot') {
-      ensureBiobotCharts();
-      return;
-    }
-    ensureSystemChart(activeSystem);
-  }
-
-  const VALID_SYSTEMS = ["biobot","gpt","meta","claude","gemini","grok","skynet"];
-  const DEFAULT_SYSTEM_STATS = {"biobot":{"label":"BIOBOT","trades":81,"winRate":23.456790123456788,"totalPnl":-24144.886699999995,"totalPips":-1856.400000000009,"avgWin":482.2803947368421,"avgLoss":537.2292612903225,"hasPnl":true,"hasPips":true,"winCount":19,"lossCount":62},"gpt":{"label":"GPT","trades":4,"winRate":0,"totalPnl":0,"totalPips":0,"avgWin":0,"avgLoss":0,"hasPnl":false,"hasPips":false,"winCount":0,"lossCount":0},"meta":{"label":"META","trades":8,"winRate":0,"totalPnl":0,"totalPips":0,"avgWin":0,"avgLoss":0,"hasPnl":false,"hasPips":false,"winCount":0,"lossCount":0},"claude":{"label":"CLAUDE","trades":12,"winRate":0,"totalPnl":0,"totalPips":0,"avgWin":0,"avgLoss":0,"hasPnl":false,"hasPips":false,"winCount":0,"lossCount":0},"gemini":{"label":"GEMINI","trades":8,"winRate":0,"totalPnl":0,"totalPips":0,"avgWin":0,"avgLoss":0,"hasPnl":true,"hasPips":true,"winCount":0,"lossCount":0},"grok":{"label":"GROK","trades":2,"winRate":0,"totalPnl":0,"totalPips":0,"avgWin":0,"avgLoss":0,"hasPnl":false,"hasPips":false,"winCount":0,"lossCount":0},"skynet":{"label":"SKYNET","trades":0,"winRate":0,"totalPnl":0,"totalPips":0,"avgWin":0,"avgLoss":0,"hasPnl":false,"hasPips":false,"winCount":0,"lossCount":0}};
-
-  function getSystemStats() {
-    const statsGrid = document.querySelector('.stats-grid');
-    const raw = statsGrid?.getAttribute('data-system-stats');
-    if (!raw) return DEFAULT_SYSTEM_STATS;
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return DEFAULT_SYSTEM_STATS;
-    }
-  }
-
-  function setStatValue(key, text, className) {
-    const valueNode = document.querySelector('[data-stat-value="' + key + '"]');
-    if (!valueNode) return;
-    valueNode.textContent = text;
-    valueNode.className = 'stat-value';
-    if (className) valueNode.classList.add(className);
-  }
-
-  function updateStatsGrid(system) {
-    const allStats = getSystemStats();
-    const stats = allStats[system] || allStats.biobot || DEFAULT_SYSTEM_STATS.biobot;
-    const tradesLabel = document.querySelector('[data-stat-label="trades"]');
-    if (tradesLabel) tradesLabel.textContent = stats.label + ' Trades';
-
-    setStatValue('trades', String(stats.trades), 'neutral');
-    setStatValue('winRate', stats.hasPnl ? stats.winRate.toFixed(1) + '%' : '—', stats.hasPnl ? (stats.winRate >= 50 ? 'profit' : 'loss') : 'neutral');
-    setStatValue('totalPnl', stats.hasPnl ? ((stats.totalPnl >= 0 ? '+' : '') + stats.totalPnl.toFixed(2) + '$') : '—', stats.hasPnl ? (stats.totalPnl >= 0 ? 'profit' : 'loss') : 'neutral');
-    setStatValue('totalPips', stats.hasPips ? ((stats.totalPips >= 0 ? '+' : '') + stats.totalPips.toFixed(1)) : '—', stats.hasPips ? (stats.totalPips >= 0 ? 'profit' : 'loss') : 'neutral');
-    setStatValue('avgWin', stats.winCount > 0 ? ('+' + stats.avgWin.toFixed(2) + '$') : '—', stats.winCount > 0 ? 'profit' : 'neutral');
-    setStatValue('avgLoss', stats.lossCount > 0 ? ('-' + stats.avgLoss.toFixed(2) + '$') : '—', stats.lossCount > 0 ? 'loss' : 'neutral');
-  }
-
-  function getRequestedSystem() {
-    const requested = (window.location.hash || '').replace('#', '').trim().toLowerCase();
-    return VALID_SYSTEMS.includes(requested) ? requested : 'biobot';
-  }
-
-  function buildRefreshUrl(system) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('t', Date.now());
-    url.hash = system || getRequestedSystem();
-    return url.toString();
-  }
-
-  function setHash(system) {
-    const url = new URL(window.location.href);
-    url.hash = system;
-    history.replaceState(null, '', url.toString());
-  }
-
-  function bindSystemPanels() {
-    const systemButtons = Array.from(document.querySelectorAll('.system-toggle'));
-    const systemPanels = Array.from(document.querySelectorAll('.system-panel'));
-
-    function setActiveSystem(system, syncHash = true) {
-      const nextSystem = VALID_SYSTEMS.includes(system) ? system : 'biobot';
-
-      systemButtons.forEach(button => {
-        const buttonSystem = button.dataset.panel || button.dataset.system;
-        const isActive = buttonSystem === nextSystem;
-        button.classList.toggle('active', isActive);
-        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
-
-      systemPanels.forEach(panel => {
-        panel.hidden = panel.dataset.panel !== nextSystem;
-      });
-
-      updateStatsGrid(nextSystem);
-      initCharts(nextSystem);
-      requestAnimationFrame(() => {
-        if (nextSystem === 'biobot') {
-          CHART_INSTANCES.forEach((chart, key) => {
-            if (key.startsWith('chart_')) chart.resize();
-          });
-        } else {
-          const panelChart = CHART_INSTANCES.get('system_chart_' + nextSystem);
-          if (panelChart) panelChart.resize();
+    new Chart(document.getElementById('chart_H2_ALLIN'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-01","2026-04-01"],
+        datasets: [{
+          label: 'H2 ALL-IN Equity ($)',
+          data: [35.15,87.87],
+          borderColor: '#f97316',
+          backgroundColor: '#f9731622',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#f97316',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
         }
-      });
-      if (syncHash) setHash(nextSystem);
-    }
-
-    systemButtons.forEach(button => {
-      const buttonSystem = button.dataset.panel || button.dataset.system;
-      button.addEventListener('click', () => setActiveSystem(buttonSystem, true));
+      }
     });
 
-    window.setActiveSystem = setActiveSystem;
-    setActiveSystem(getRequestedSystem(), false);
-  }
+    new Chart(document.getElementById('chart_H1'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-06","2026-04-06"],
+        datasets: [{
+          label: 'H1 Equity ($)',
+          data: [-425.75,-1064.37,-233.36,-201.54,-624.46,-1258.85,-1674.6,-2298.23,-2709.92,-3327.45,-3282.57,-3215.25,-3627.96,-4247.03],
+          borderColor: '#eab308',
+          backgroundColor: '#eab30822',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#eab308',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
 
-  function reloadWithActivePanel() {
-    const activeButton = document.querySelector('.system-toggle.active');
-    const activeSystem = activeButton?.dataset.panel || activeButton?.dataset.system || getRequestedSystem();
-    window.location.href = buildRefreshUrl(activeSystem);
-  }
+    new Chart(document.getElementById('chart_M30'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
+        datasets: [{
+          label: 'M30 Equity ($)',
+          data: [-506.28,-1265.69,-1706.55,-2367.83,-2334.27,-2291.88,-2712.96,-3344.6,-3794.59,-4469.58,-4914.14,-5580.97,-6027.45,-6697.16,-7095.87,-7693.92,-8091.06,-8686.76],
+          borderColor: '#00ff88',
+          backgroundColor: '#00ff8822',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#00ff88',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
 
-  window.reloadWithActivePanel = reloadWithActivePanel;
+    new Chart(document.getElementById('chart_M15'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-01","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
+        datasets: [{
+          label: 'M15 Equity ($)',
+          data: [2544.35,3744.27,4053.62,5359.11,4913.75,4245.71,3827.42,3199.98,2667.76,1869.43,1454.8,832.85,426.1,-184.03,-614.18,-1259.4,-1679.61,-2309.92,-2721.13,-3337.93,-3756.66,-4381.67,-4792.47,-5408.67,-5889.21,-6610.02,-7145.67,-7949.16,-7638.2,-7174.14,-7572.19,-8169.25,-7944.69,-7615.23],
+          borderColor: '#ec4899',
+          backgroundColor: '#ec489922',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#ec4899',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+</script>
 
-  function refreshContainerIfChanged() {
-    const url = new URL(window.location.href);
-    url.searchParams.set('_', Date.now());
-
-    fetch(url.toString(), { cache: 'no-store' })
-      .then(response => response.text())
+<script>
+  // Auto-refresh silencieux aux 5 minutes
+  setInterval(() => {
+    fetch(window.location.href + '?_=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.text())
       .then(html => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        const newContainer = doc.querySelector('.container');
-        const oldContainer = document.querySelector('.container');
-        if (!newContainer || !oldContainer || newContainer.innerHTML === oldContainer.innerHTML) return;
-
-        const activeSystem = getRequestedSystem();
-        oldContainer.innerHTML = newContainer.innerHTML;
-        bindSystemPanels();
-        initCharts(activeSystem);
-        window.setActiveSystem(activeSystem, false);
-        console.log('Journal refreshed');
+        const newBody = doc.querySelector('.container');
+        const oldBody = document.querySelector('.container');
+        if (newBody && oldBody && newBody.innerHTML !== oldBody.innerHTML) {
+          oldBody.innerHTML = newBody.innerHTML;
+          // Re-init Chart.js
+          const scripts = doc.querySelectorAll('script');
+          scripts.forEach(s => {
+            if (s.textContent.includes('new Chart')) {
+              try { eval(s.textContent); } catch(e) {}
+            }
+          });
+          console.log('Journal refreshed');
+        }
       })
       .catch(() => {});
-  }
-
-  bindSystemPanels();
-  initCharts(getRequestedSystem());
-
-  setTimeout(() => reloadWithActivePanel(), 300000);
-  setInterval(() => refreshContainerIfChanged(), 300000);
+  }, 300000); // 5 minutes
 </script>
 
 </body>
