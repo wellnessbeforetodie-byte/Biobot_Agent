@@ -116,6 +116,68 @@ setTimeout(() => {
     margin: 2rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
   }
 
+  .system-switcher {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:0.75rem;
+    background:rgba(18,18,26,0.9);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:1rem;
+    margin: 0 0 2rem;
+  }
+
+  .system-toggle {
+    appearance:none;
+    background:transparent;
+    border:2px solid var(--system-color, var(--border));
+    color:var(--system-color, var(--text-primary));
+    border-radius:999px;
+    padding:0.7rem 1.1rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+
+  .system-toggle:hover {
+    transform:translateY(-1px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .system-toggle.active {
+    background:var(--system-color, var(--accent-purple));
+    color:#fff;
+  }
+
+  .system-panel[hidden] { display:none !important; }
+
+  .placeholder-panel {
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:3rem 1.5rem;
+    text-align:center;
+    color:var(--text-secondary);
+    margin-bottom:2rem;
+  }
+
+  .placeholder-panel .emoji {
+    display:block;
+    font-size:2.5rem;
+    margin-bottom:0.75rem;
+  }
+
+  .placeholder-panel .system-name {
+    font-family:'JetBrains Mono',monospace;
+    font-size:1.1rem;
+    font-weight:700;
+    color:var(--system-color, var(--text-primary));
+    margin-bottom:0.35rem;
+  }
+
   .global-chart { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; }
   .chart-container { height: 220px; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1rem; }
 
@@ -201,11 +263,22 @@ setTimeout(() => {
     <br><br>🐦 All trades are posted live on X — <a href="https://x.com/Agent_biobot" target="_blank" style="color:#a855f7;text-decoration:none;font-weight:600">@Agent_Biobot</a>
   </div>
 
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0">
-    <div class="section-title" style="margin-bottom:0">⏰ Performance by Timeframe</div>
-    <button onclick="window.location.href=window.location.pathname+'?t='+Date.now()" style="background:rgba(0,255,136,0.15);color:#00ff88;border:2px solid #00ff88;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;cursor:pointer;border-radius:6px;letter-spacing:1px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.3)'" onmouseout="this.style.background='rgba(0,255,136,0.15)'">🔄 REFRESH</button>
+  <div class="system-switcher" role="group" aria-label="Trading systems">
+    <button class="system-toggle active" type="button" data-system="biobot" aria-pressed="true" style="--system-color:#a855f7">🟣 BIOBOT</button>
+    <button class="system-toggle" type="button" data-system="gpt" aria-pressed="false" style="--system-color:#06b6d4">🩵 GPT</button>
+    <button class="system-toggle" type="button" data-system="meta" aria-pressed="false" style="--system-color:#f59e0b">🟠 META</button>
+    <button class="system-toggle" type="button" data-system="claude" aria-pressed="false" style="--system-color:#3b82f6">🔵 CLAUDE</button>
+    <button class="system-toggle" type="button" data-system="gemini" aria-pressed="false" style="--system-color:#ef4444">🔴 GEMINI</button>
+    <button class="system-toggle" type="button" data-system="grok" aria-pressed="false" style="--system-color:#10b981">🟢 GROK</button>
+    <button class="system-toggle" type="button" data-system="skynet" aria-pressed="false" style="--system-color:#888888">⚪ SKYNET</button>
   </div>
-  
+
+  <div class="system-panel" data-panel="biobot">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0">
+      <div class="section-title" style="margin-bottom:0">⏰ Performance by Timeframe</div>
+      <button onclick="window.location.href=window.location.pathname+'?t='+Date.now()" style="background:rgba(0,255,136,0.15);color:#00ff88;border:2px solid #00ff88;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;cursor:pointer;border-radius:6px;letter-spacing:1px;transition:all 0.2s" onmouseover="this.style.background='rgba(0,255,136,0.3)'" onmouseout="this.style.background='rgba(0,255,136,0.15)'">🔄 REFRESH</button>
+    </div>
+    
     <div class="tf-section">
       <div class="tf-header" style="border-left: 4px solid #a855f7">
         <div class="tf-title" style="color: #a855f7">H2 Primary</div>
@@ -306,11 +379,11 @@ setTimeout(() => {
       </div>
     </div>
 
-  <div class="section-title">📋 All Trades</div>
-  <div class="trade-table-wrapper">
-    <table>
-      <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
-      <tbody><tr class="loss">
+    <div class="section-title">📋 All Trades</div>
+    <div class="trade-table-wrapper">
+      <table>
+        <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
+        <tbody><tr class="loss">
       <td>2026-04-03<br><span class="time">04:12 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
       <td>📈 BUY</td>
@@ -930,7 +1003,27 @@ setTimeout(() => {
       <td>—R</td>
       <td>❌</td>
     </tr></tbody>
-    </table>
+      </table>
+    </div>
+  </div>
+
+  <div class="system-panel" data-panel="gpt" hidden>
+    <div class="placeholder-panel" style="--system-color:#06b6d4"><span class="emoji">🩵</span><div class="system-name">GPT</div><div>En attente de données...</div></div>
+  </div>
+  <div class="system-panel" data-panel="meta" hidden>
+    <div class="placeholder-panel" style="--system-color:#f59e0b"><span class="emoji">🟠</span><div class="system-name">META</div><div>En attente de données...</div></div>
+  </div>
+  <div class="system-panel" data-panel="claude" hidden>
+    <div class="placeholder-panel" style="--system-color:#3b82f6"><span class="emoji">🔵</span><div class="system-name">CLAUDE</div><div>En attente de données...</div></div>
+  </div>
+  <div class="system-panel" data-panel="gemini" hidden>
+    <div class="placeholder-panel" style="--system-color:#ef4444"><span class="emoji">🔴</span><div class="system-name">GEMINI</div><div>En attente de données...</div></div>
+  </div>
+  <div class="system-panel" data-panel="grok" hidden>
+    <div class="placeholder-panel" style="--system-color:#10b981"><span class="emoji">🟢</span><div class="system-name">GROK</div><div>En attente de données...</div></div>
+  </div>
+  <div class="system-panel" data-panel="skynet" hidden>
+    <div class="placeholder-panel" style="--system-color:#888888"><span class="emoji">⚪</span><div class="system-name">SKYNET</div><div>En attente de données...</div></div>
   </div>
 
 </div>
@@ -938,7 +1031,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-05, 8:45:03 p.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-05, 9:00:06 p.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
@@ -1205,6 +1298,25 @@ setTimeout(() => {
 </script>
 
 <script>
+  const systemButtons = document.querySelectorAll('.system-toggle');
+  const systemPanels = document.querySelectorAll('.system-panel');
+
+  function setActiveSystem(system) {
+    systemButtons.forEach(button => {
+      const isActive = button.dataset.system === system;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    systemPanels.forEach(panel => {
+      panel.hidden = panel.dataset.panel !== system;
+    });
+  }
+
+  systemButtons.forEach(button => {
+    button.addEventListener('click', () => setActiveSystem(button.dataset.system));
+  });
+
   // Auto-refresh silencieux aux 5 minutes
   setInterval(() => {
     fetch(window.location.href + '?_=' + Date.now(), { cache: 'no-store' })
@@ -1223,6 +1335,7 @@ setTimeout(() => {
               try { eval(s.textContent); } catch(e) {}
             }
           });
+          setActiveSystem(document.querySelector('.system-toggle.active')?.dataset.system || 'biobot');
           console.log('Journal refreshed');
         }
       })
