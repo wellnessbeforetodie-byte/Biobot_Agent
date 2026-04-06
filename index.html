@@ -212,13 +212,13 @@ setTimeout(() => {
         <div class="tf-desc">Core strategy — 13 major pairs, score 8/10 min, conservative entries</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">17</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">17.6%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-5460.38$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-351.1</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+445.44$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value neutral">19</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">26.3%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-5017.67$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-306.5</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+355.81$</div></div>
         <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-485.48$</div></div>
-        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">3</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">5</div></div>
         <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">14</div></div>
       </div>
       <div class="chart-container">
@@ -310,7 +310,27 @@ setTimeout(() => {
   <div class="trade-table-wrapper">
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
-      <tbody><tr class="loss">
+      <tbody><tr class="profit">
+      <td>2026-04-06<br><span class="time">02:18 p.m.</span></td>
+      <td><strong>GBP/USD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="profit">+265.62$</td>
+      <td>+22.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-06<br><span class="time">02:18 p.m.</span></td>
+      <td><strong>GBP/USD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="profit">+177.08$</td>
+      <td>+22.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="loss">
       <td>2026-04-06<br><span class="time">01:02 p.m.</span></td>
       <td><strong>AUD/USD</strong></td>
       <td>📈 BUY</td>
@@ -1208,7 +1228,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-06, 2:15:03 p.m. (Eastern)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-06, 2:20:05 p.m. (Eastern)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
 
@@ -1221,18 +1241,18 @@ setTimeout(() => {
     new Chart(document.getElementById('chart_H2_Primary'), {
       type: 'line',
       data: {
-        labels: ["2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
+        labels: ["2026-04-02","2026-04-02","2026-04-02","2026-04-03","2026-04-03","2026-04-03","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06","2026-04-06"],
         datasets: [{
           label: 'H2 Primary Equity ($)',
-          data: [883.22,380.54,-373.49,-848.17,-1560.2,-1128.44,-1338.38,-1653.29,-2067.13,-2687.88,-2666.54,-3073.41,-3683.73,-4098.67,-4721.07,-5016.79,-5460.38],
+          data: [883.22,380.54,-373.49,-848.17,-1560.2,-1128.44,-1338.38,-1653.29,-2067.13,-2687.88,-2666.54,-3073.41,-3683.73,-4098.67,-4721.07,-5016.79,-5460.38,-5283.3,-5017.67],
           borderColor: '#a855f7',
           backgroundColor: '#a855f722',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
           pointHoverRadius: 6,
         }]
       },
