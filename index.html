@@ -207,19 +207,99 @@ setTimeout(() => {
   </div>
   
     <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #a855f7">
+        <div class="tf-title" style="color: #a855f7">H2 Primary</div>
+        <div class="tf-desc">Core strategy — 13 major pairs, score 8/10 min, conservative entries</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">5</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">80.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+1941.41$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+192.4</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+505.56$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-80.85$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">4</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">1</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_H2_Primary"></canvas>
+      </div>
+    </div>
+
+    <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #f97316">
+        <div class="tf-title" style="color: #f97316">H2 ALL-IN</div>
+        <div class="tf-desc">Aggressive scanner — 28 pairs including exotics, 24H, high volume</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">2</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+521.74$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+78.6</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+260.87$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">2</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_H2_ALLIN"></canvas>
+      </div>
+    </div>
+
+    <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #3b82f6">
+        <div class="tf-title" style="color: #3b82f6">H2 7pts</div>
+        <div class="tf-desc">Relaxed threshold — 13 pairs, score 7/10 min, more opportunities</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">2</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+520.04$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+78.3</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+260.02$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">2</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_H2_7pts"></canvas>
+      </div>
+    </div>
+
+    <div class="tf-section">
+      <div class="tf-header" style="border-left: 4px solid #eab308">
+        <div class="tf-title" style="color: #eab308">H1</div>
+        <div class="tf-desc">Hourly momentum — 13 pairs, trend-following on 1H candles</div>
+      </div>
+      <div class="tf-stats-grid">
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">16</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+3434.06$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+338.2</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+214.63$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">16</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chart_H1"></canvas>
+      </div>
+    </div>
+
+    <div class="tf-section">
       <div class="tf-header" style="border-left: 4px solid #00ff88">
         <div class="tf-title" style="color: #00ff88">M30</div>
         <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight™ validation</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">4</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+1199.59$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+88.2</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+299.90$</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
-        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">4</div></div>
-        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">15</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">80.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+1677.92$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+94.2</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+154.36$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-58.14$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">12</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">3</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_M30"></canvas>
@@ -232,14 +312,14 @@ setTimeout(() => {
         <div class="tf-desc">15-min scalping — 13 pairs, quick entries, no BioSight™ filter</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">4</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">100.0%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+1703.59$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+104.2</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+425.90$</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-0$</div></div>
-        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">4</div></div>
-        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">0</div></div>
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">19</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">68.4%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+2087.64$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+143.1</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+200.61$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-86.71$</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">13</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">6</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_M15"></canvas>
@@ -251,6 +331,516 @@ setTimeout(() => {
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
       <tbody><tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#3b82f6;color:#3b82f6">H2 7pts</span></td>
+      <td class="profit">+120.81$</td>
+      <td>+7.9</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#3b82f6;color:#3b82f6">H2 7pts</span></td>
+      <td class="profit">+399.23$</td>
+      <td>+70.4</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#f97316;color:#f97316">H2 ALL-IN</span></td>
+      <td class="profit">+120.81$</td>
+      <td>+7.9</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#f97316;color:#f97316">H2 ALL-IN</span></td>
+      <td class="profit">+400.93$</td>
+      <td>+70.7</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>EUR/GBP</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+28.74$</td>
+      <td>+2.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>EUR/GBP</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+29.99$</td>
+      <td>+2.4</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>EUR/GBP</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+19.16$</td>
+      <td>+2.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>USD/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="loss">-65.40$</td>
+      <td>-26.2</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>USD/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="loss">-43.60$</td>
+      <td>-26.2</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>USD/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="loss">-65.40$</td>
+      <td>-26.2</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+153.96$</td>
+      <td>+25.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+102.64$</td>
+      <td>+25.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+119.35$</td>
+      <td>+9.0</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+79.56$</td>
+      <td>+9.0</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="profit">+119.35$</td>
+      <td>+9.0</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>EUR/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+120.39$</td>
+      <td>+19.8</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>EUR/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+80.26$</td>
+      <td>+19.8</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>EUR/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+99.24$</td>
+      <td>+19.8</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>EUR/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+66.83$</td>
+      <td>+20.0</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>AUD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+403.67$</td>
+      <td>+27.8</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">08:00 p.m.</span></td>
+      <td><strong>AUD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+269.11$</td>
+      <td>+27.8</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+141.94$</td>
+      <td>+24.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+94.63$</td>
+      <td>+24.3</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+97.77$</td>
+      <td>+23.7</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+65.18$</td>
+      <td>+23.7</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+431.60$</td>
+      <td>+16.4</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+287.73$</td>
+      <td>+16.4</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>NZD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+382.74$</td>
+      <td>+18.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>NZD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+382.70$</td>
+      <td>+18.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>NZD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+255.16$</td>
+      <td>+18.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>NZD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+255.14$</td>
+      <td>+18.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>USD/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-58.57$</td>
+      <td>-8.9</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>USD/CHF</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-39.05$</td>
+      <td>-8.9</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>NZD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+63.06$</td>
+      <td>+24.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>NZD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+42.04$</td>
+      <td>+24.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>AUD/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+15.89$</td>
+      <td>+7.1</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+84.07$</td>
+      <td>+14.9</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+56.05$</td>
+      <td>+14.9</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+84.06$</td>
+      <td>+14.9</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+56.04$</td>
+      <td>+14.9</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+301.86$</td>
+      <td>+15.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="profit">+201.24$</td>
+      <td>+15.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>EUR/CAD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-126.80$</td>
+      <td>-22.6</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>EUR/CAD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-126.80$</td>
+      <td>-22.6</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>EUR/CAD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-84.53$</td>
+      <td>-22.6</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>EUR/CAD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#ec4899;color:#ec4899">M15</span></td>
+      <td class="loss">-84.53$</td>
+      <td>-22.6</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>AUD/USD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="loss">-80.85$</td>
+      <td>-6.0</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="profit">+626.08$</td>
+      <td>+73.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/AUD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="profit">+417.39$</td>
+      <td>+73.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="profit">+587.27$</td>
+      <td>+25.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-09<br><span class="time">07:59 p.m.</span></td>
+      <td><strong>GBP/CHF</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="profit">+391.51$</td>
+      <td>+25.6</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
       <td>2026-04-09<br><span class="time">07:30 p.m.</span></td>
       <td><strong>EUR/USD</strong></td>
       <td>📈 BUY</td>
@@ -338,7 +928,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-09, 7:55:04 p.m. (America/Toronto)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-09, 8:00:04 p.m. (America/Toronto)</p>
   <p style="margin-top:.5rem">Active point zero: 2026-04-09 14:30 (America/Toronto) (2026-04-09T18:30:00Z)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
@@ -349,21 +939,225 @@ setTimeout(() => {
 
   // Per-TF charts
   
+    new Chart(document.getElementById('chart_H2_Primary'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09"],
+        datasets: [{
+          label: 'H2 Primary Equity ($)',
+          data: [391.51,978.78,1396.17,2022.26,1941.41],
+          borderColor: '#a855f7',
+          backgroundColor: '#a855f722',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#a855f7',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('chart_H2_ALLIN'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-10","2026-04-10"],
+        datasets: [{
+          label: 'H2 ALL-IN Equity ($)',
+          data: [400.93,521.74],
+          borderColor: '#f97316',
+          backgroundColor: '#f9731622',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#f97316',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('chart_H2_7pts'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-10","2026-04-10"],
+        datasets: [{
+          label: 'H2 7pts Equity ($)',
+          data: [399.23,520.04],
+          borderColor: '#3b82f6',
+          backgroundColor: '#3b82f622',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#3b82f6',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('chart_H1'), {
+      type: 'line',
+      data: {
+        labels: ["2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10"],
+        datasets: [{
+          label: 'H1 Equity ($)',
+          data: [255.14,510.29,893,1275.73,1563.47,1995.07,2060.25,2158.02,2252.64,2394.58,2663.69,3067.36,3134.18,3233.42,3313.68,3434.06],
+          borderColor: '#eab308',
+          backgroundColor: '#eab30822',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointHoverRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1a1a28',
+            borderColor: '#eab308',
+            borderWidth: 1,
+            titleColor: '#e8e8f0',
+            bodyColor: '#e8e8f0',
+            callbacks: {
+              label: ctx => ctx.parsed.y >= 0 ? '+' + ctx.parsed.y.toFixed(2) + '$ CAD' : ctx.parsed.y.toFixed(2) + '$ CAD'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#555570', maxTicksLimit: 8, font: { family: 'JetBrains Mono', size: 10 } },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          },
+          y: {
+            ticks: { 
+              color: '#555570', 
+              font: { family: 'JetBrains Mono', size: 10 },
+              callback: v => (v >= 0 ? '+' : '') + v + '$'
+            },
+            grid: { color: 'rgba(42,42,64,0.5)' }
+          }
+        }
+      }
+    });
+
     new Chart(document.getElementById('chart_M30'), {
       type: 'line',
       data: {
-        labels: ["2026-04-09","2026-04-09","2026-04-09","2026-04-09"],
+        labels: ["2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-10"],
         datasets: [{
           label: 'M30 Equity ($)',
-          data: [240.57,481.15,840.37,1199.59],
+          data: [240.57,481.15,840.37,1199.59,1318.94,1398.5,1517.85,1620.49,1774.44,1709.04,1665.44,1600.04,1619.2,1649.18,1677.92],
           borderColor: '#00ff88',
           backgroundColor: '#00ff8822',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
-          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
           pointHoverRadius: 6,
         }]
       },
@@ -403,18 +1197,18 @@ setTimeout(() => {
     new Chart(document.getElementById('chart_M15'), {
       type: 'line',
       data: {
-        labels: ["2026-04-09","2026-04-09","2026-04-09","2026-04-09"],
+        labels: ["2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09","2026-04-09"],
         datasets: [{
           label: 'M15 Equity ($)',
-          data: [430.18,1075.45,1326.71,1703.59],
+          data: [430.18,1075.45,1326.71,1703.59,1619.06,1534.53,1407.73,1280.94,1482.18,1784.03,1840.08,1924.14,1980.19,2064.26,2080.16,2122.2,2185.26,2146.21,2087.64],
           borderColor: '#ec4899',
           backgroundColor: '#ec489922',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
-          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
           pointHoverRadius: 6,
         }]
       },
