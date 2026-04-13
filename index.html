@@ -212,13 +212,13 @@ setTimeout(() => {
         <div class="tf-desc">Hourly momentum — 13 pairs, trend-following on 1H candles</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">2</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">0.0%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-1751.63$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-115.6</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+0$</div></div>
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">4</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">50.0%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-1444.65$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-98.8</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+153.49$</div></div>
         <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-875.82$</div></div>
-        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">0</div></div>
+        <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">2</div></div>
         <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">2</div></div>
       </div>
       <div class="chart-container">
@@ -270,7 +270,27 @@ setTimeout(() => {
   <div class="trade-table-wrapper">
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
-      <tbody><tr class="loss">
+      <tbody><tr class="profit">
+      <td>2026-04-13<br><span class="time">02:09 p.m.</span></td>
+      <td><strong>EUR/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+184.19$</td>
+      <td>+8.4</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="profit">
+      <td>2026-04-13<br><span class="time">02:09 p.m.</span></td>
+      <td><strong>EUR/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="profit">+122.80$</td>
+      <td>+8.4</td>
+      <td>—R</td>
+      <td>✅</td>
+    </tr>
+<tr class="loss">
       <td>2026-04-13<br><span class="time">07:55 a.m.</span></td>
       <td><strong>GBP/USD</strong></td>
       <td>📈 BUY</td>
@@ -378,7 +398,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-13, 2:05:02 p.m. (America/Toronto)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-13, 2:10:03 p.m. (America/Toronto)</p>
   <p style="margin-top:.5rem">Active point zero: 2026-04-09 20:01 (America/Toronto) (2026-04-10T00:01:00Z)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
@@ -392,18 +412,18 @@ setTimeout(() => {
     new Chart(document.getElementById('chart_H1'), {
       type: 'line',
       data: {
-        labels: ["2026-04-12","2026-04-12"],
+        labels: ["2026-04-12","2026-04-12","2026-04-13","2026-04-13"],
         datasets: [{
           label: 'H1 Equity ($)',
-          data: [-700.65,-1751.63],
+          data: [-700.65,-1751.63,-1628.84,-1444.65],
           borderColor: '#eab308',
           backgroundColor: '#eab30822',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-          pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
+          pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)"],
           pointHoverRadius: 6,
         }]
       },
