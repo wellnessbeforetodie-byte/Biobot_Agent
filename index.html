@@ -232,14 +232,14 @@ setTimeout(() => {
         <div class="tf-desc">30-min entries — 13 pairs, faster setups with BioSight™ validation</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">4</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value profit">50.0%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-419.84$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-5.5</div></div>
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">6</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">33.3%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-1483.28$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-40.5</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+359.54$</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-569.46$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-550.59$</div></div>
         <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">2</div></div>
-        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">2</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">4</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_M30"></canvas>
@@ -271,6 +271,26 @@ setTimeout(() => {
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
       <tbody><tr class="loss">
+      <td>2026-04-13<br><span class="time">07:55 a.m.</span></td>
+      <td><strong>GBP/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="loss">-638.06$</td>
+      <td>-17.5</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-13<br><span class="time">07:55 a.m.</span></td>
+      <td><strong>GBP/USD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#00ff88;color:#00ff88">M30</span></td>
+      <td class="loss">-425.38$</td>
+      <td>-17.5</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
       <td>2026-04-12<br><span class="time">05:04 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
       <td>📈 BUY</td>
@@ -358,7 +378,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-13, 7:55:03 a.m. (America/Toronto)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-13, 8:00:07 a.m. (America/Toronto)</p>
   <p style="margin-top:.5rem">Active point zero: 2026-04-09 20:01 (America/Toronto) (2026-04-10T00:01:00Z)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
@@ -423,18 +443,18 @@ setTimeout(() => {
     new Chart(document.getElementById('chart_M30'), {
       type: 'line',
       data: {
-        labels: ["2026-04-10","2026-04-10","2026-04-10","2026-04-10"],
+        labels: ["2026-04-10","2026-04-10","2026-04-10","2026-04-10","2026-04-13","2026-04-13"],
         datasets: [{
           label: 'M30 Equity ($)',
-          data: [688.6,228.31,-450.31,-419.84],
+          data: [688.6,228.31,-450.31,-419.84,-845.21,-1483.28],
           borderColor: '#00ff88',
           backgroundColor: '#00ff8822',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)"],
-          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)"],
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
           pointHoverRadius: 6,
         }]
       },
