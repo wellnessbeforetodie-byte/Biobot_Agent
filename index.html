@@ -212,14 +212,14 @@ setTimeout(() => {
         <div class="tf-desc">Core strategy — 13 major pairs, score 8/10 min, conservative entries</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">12</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">8.3%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-4786.26$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-253.8</div></div>
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">14</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">7.1%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value loss">-5793.51$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value loss">-339.6</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+530.19$</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-483.31$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-486.44$</div></div>
         <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">1</div></div>
-        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">11</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">13</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_H2_Primary"></canvas>
@@ -291,6 +291,26 @@ setTimeout(() => {
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
       <tbody><tr class="loss">
+      <td>2026-04-21<br><span class="time">09:58 a.m.</span></td>
+      <td><strong>EUR/CAD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="loss">-604.35$</td>
+      <td>-42.9</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-21<br><span class="time">09:58 a.m.</span></td>
+      <td><strong>EUR/CAD</strong></td>
+      <td>📈 BUY</td>
+      <td><span class="tf-badge" style="border-color:#a855f7;color:#a855f7">H2 Primary</span></td>
+      <td class="loss">-402.90$</td>
+      <td>-42.9</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
       <td>2026-04-20<br><span class="time">11:07 a.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
       <td>📈 BUY</td>
@@ -1048,7 +1068,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-21, 9:30:14 a.m. (America/Toronto)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-21, 10:00:05 a.m. (America/Toronto)</p>
   <p style="margin-top:.5rem">Active point zero: 2026-04-09 20:01 (America/Toronto) (2026-04-10T00:01:00Z)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
@@ -1062,18 +1082,18 @@ setTimeout(() => {
     new Chart(document.getElementById('chart_H2_Primary'), {
       type: 'line',
       data: {
-        labels: ["2026-04-14","2026-04-14","2026-04-15","2026-04-15","2026-04-16","2026-04-16","2026-04-17","2026-04-17","2026-04-17","2026-04-17","2026-04-20","2026-04-20"],
+        labels: ["2026-04-14","2026-04-14","2026-04-15","2026-04-15","2026-04-16","2026-04-16","2026-04-17","2026-04-17","2026-04-17","2026-04-17","2026-04-20","2026-04-20","2026-04-21","2026-04-21"],
         datasets: [{
           label: 'H2 Primary Equity ($)',
-          data: [530.19,505.15,74.25,-572.1,-1001.71,-1646.11,-2076.89,-2723.07,-3139.83,-3763.16,-4172.4,-4786.26],
+          data: [530.19,505.15,74.25,-572.1,-1001.71,-1646.11,-2076.89,-2723.07,-3139.83,-3763.16,-4172.4,-4786.26,-5189.16,-5793.51],
           borderColor: '#a855f7',
           backgroundColor: '#a855f722',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBackgroundColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
           pointHoverRadius: 6,
         }]
       },
