@@ -232,14 +232,14 @@ setTimeout(() => {
         <div class="tf-desc">Hourly momentum — 13 pairs, trend-following on 1H candles</div>
       </div>
       <div class="tf-stats-grid">
-        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">24</div></div>
-        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">41.7%</div></div>
-        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+1690.65$</div></div>
-        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+137.2</div></div>
+        <div class="stat-card"><div class="stat-label">Closed Trades</div><div class="stat-value neutral">26</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value loss">38.5%</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-value profit">+491.74$</div></div>
+        <div class="stat-card"><div class="stat-label">Total Pips</div><div class="stat-value profit">+92.0</div></div>
         <div class="stat-card"><div class="stat-label">Avg Win</div><div class="stat-value profit">+547.52$</div></div>
-        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-270.33$</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Loss</div><div class="stat-value loss">-311.47$</div></div>
         <div class="stat-card"><div class="stat-label">Wins</div><div class="stat-value profit">10</div></div>
-        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">14</div></div>
+        <div class="stat-card"><div class="stat-label">Losses</div><div class="stat-value loss">16</div></div>
       </div>
       <div class="chart-container">
         <canvas id="chart_H1"></canvas>
@@ -291,6 +291,26 @@ setTimeout(() => {
     <table>
       <thead><tr><th>Date</th><th>Pair</th><th>Dir</th><th>Timeframe</th><th>P&L</th><th>Pips</th><th>R:R</th><th></th></tr></thead>
       <tbody><tr class="loss">
+      <td>2026-04-23<br><span class="time">04:42 a.m.</span></td>
+      <td><strong>GBP/CAD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="loss">-719.35$</td>
+      <td>-22.6</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
+      <td>2026-04-23<br><span class="time">04:42 a.m.</span></td>
+      <td><strong>GBP/CAD</strong></td>
+      <td>📉 SELL</td>
+      <td><span class="tf-badge" style="border-color:#eab308;color:#eab308">H1</span></td>
+      <td class="loss">-479.56$</td>
+      <td>-22.6</td>
+      <td>—R</td>
+      <td>❌</td>
+    </tr>
+<tr class="loss">
       <td>2026-04-22<br><span class="time">04:03 p.m.</span></td>
       <td><strong>EUR/CAD</strong></td>
       <td>📉 SELL</td>
@@ -1108,7 +1128,7 @@ setTimeout(() => {
 <div class="footer">
   <p>🔬 Biobot — AI Trading Agent | Powered by OpenClaw</p>
   <p>Murphy × Nison × Van Tharp | BioSight™ Vision AI | PulseGuard™</p>
-  <p style="margin-top:.5rem">Last updated: 2026-04-23, 4:30:07 a.m. (America/Toronto)</p>
+  <p style="margin-top:.5rem">Last updated: 2026-04-23, 5:00:07 a.m. (America/Toronto)</p>
   <p style="margin-top:.5rem">Active point zero: 2026-04-09 20:01 (America/Toronto) (2026-04-10T00:01:00Z)</p>
   <p style="margin-top:.5rem"><a href="https://x.com/Agent_biobot">@Agent_Biobot on X</a></p>
 </div>
@@ -1173,18 +1193,18 @@ setTimeout(() => {
     new Chart(document.getElementById('chart_H1'), {
       type: 'line',
       data: {
-        labels: ["2026-04-12","2026-04-12","2026-04-13","2026-04-13","2026-04-13","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-15","2026-04-15","2026-04-15","2026-04-15","2026-04-15","2026-04-16","2026-04-16","2026-04-16","2026-04-16","2026-04-22","2026-04-22"],
+        labels: ["2026-04-12","2026-04-12","2026-04-13","2026-04-13","2026-04-13","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-14","2026-04-15","2026-04-15","2026-04-15","2026-04-15","2026-04-15","2026-04-16","2026-04-16","2026-04-16","2026-04-16","2026-04-22","2026-04-22","2026-04-23","2026-04-23"],
         datasets: [{
           label: 'H1 Equity ($)',
-          data: [-700.65,-1751.63,-1628.84,-1444.65,-808.91,-99.81,-120.27,-153.88,-249.98,-315.54,-330.94,-354.03,-396.22,-138.51,670.32,236.2,-414.97,549.18,120.91,799.57,1245.19,1913.6,1824.42,1690.65],
+          data: [-700.65,-1751.63,-1628.84,-1444.65,-808.91,-99.81,-120.27,-153.88,-249.98,-315.54,-330.94,-354.03,-396.22,-138.51,670.32,236.2,-414.97,549.18,120.91,799.57,1245.19,1913.6,1824.42,1690.65,1211.09,491.74],
           borderColor: '#eab308',
           backgroundColor: '#eab30822',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
-          pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
-          pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBackgroundColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
+          pointBorderColor: ["rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(0,255,136,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)","rgba(255,68,102,0.8)"],
           pointHoverRadius: 6,
         }]
       },
